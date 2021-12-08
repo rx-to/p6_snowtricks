@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block main %}
+	<header id="header-home">
+		<img src="./img/logo-snowtricks.png" alt="Snowtricks &mdash; Site communautaire dédié au snowboard">
+		<h1 class="h1 mt-4">Site communautaire<br>dédié au snowboard</h1>
+	</header>
+
+	<div class="section">
+		<div class="container">		
+			{% include 'inc/bloc-figures.html.twig' %}
+		</div>
+	</div>
+{% endblock %}

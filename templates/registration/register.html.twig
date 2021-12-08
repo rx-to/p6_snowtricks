@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}Inscription
+{% endblock %}
+
+{% block main %}
+	<section>
+		<h1 class="h1 text-white">Inscription</h1>
+		{{ form_start(registrationForm, {'attr': {'class': 'form-custom section'}}) }}
+		<div class="container">
+			{% if form_errors(registrationForm) %}
+				<div class="alert alert-danger text-start alert-custom">
+					{{ form_errors(registrationForm) }}
+				</div>
+			{% endif %}
+
+			{{ form_label(registrationForm.username, 'Pseudo', {'label_attr': {'class': 'label-custom'}}) }}
+			{{ form_widget(registrationForm.username, {'attr': {'class': 'input-custom'}}) }}
+			{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'label-custom'}}) }}
+			{{ form_widget(registrationForm.email, {'attr': {'class': 'input-custom'}}) }}
+			{{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'label-custom'}}) }}
+			{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input-custom'}}) }}
+			<button type="submit" class="cta">S'inscrire</button>
+			<p class="mb-0">
+				<a href="connexion">Déjà inscrit(e) ?</a>
+			</p>
+		</div>
+		{{ form_end(registrationForm) }}
+	</section>
+
+{% endblock %}

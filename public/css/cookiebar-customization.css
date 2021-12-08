@@ -1,0 +1,151 @@
+/* Container */
+
+div#tarteaucitronServices {
+	margin-top: 32px!important;
+}
+
+/* Font de la barre */
+
+#tarteaucitronRoot #tarteaucitronAlertBig {
+	background-color: #000000;
+}
+
+/* Texte de la barre */
+
+#tarteaucitronAlertBig #tarteaucitronPrivacyUrl, #tarteaucitronAlertBig #tarteaucitronPrivacyUrlDialog, #tarteaucitronAlertBig #tarteaucitronDisclaimerAlert, #tarteaucitronAlertBig #tarteaucitronDisclaimerAlert strong {
+	color: #ffffff;
+}
+
+/* Tous les boutons */
+
+button {
+	outline: 0 !important;
+}
+
+/* Boutons de la barre */
+
+#tarteaucitronAlertBig #tarteaucitronCloseAlert, #tarteaucitronAlertBig #tarteaucitronPersonalize, #tarteaucitronAlertBig #tarteaucitronPersonalize2, .tarteaucitronCTAButton, #tarteaucitron #tarteaucitronPrivacyUrl, #tarteaucitron #tarteaucitronPrivacyUrlDialog, #tarteaucitronRoot .tarteaucitronDeny, #tarteaucitronRoot .tarteaucitronAllow {
+	padding: 1rem 2rem !important;
+}
+
+/* Picto des boutons */
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronAllow span::before, #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny span::before, .tac_activate .tarteaucitronAllow span::before {
+	color: #000000;
+}
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronAllow.tarteaucitronIsSelected span::before, #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny.tarteaucitronIsSelected span::before, .tac_activate .tarteaucitronAllow.tarteaucitronIsSelected span::before, .tarteaucitronAllow span::before, #tarteaucitron #tarteaucitronServices .tarteaucitronLine.tarteaucitronIsAllowed .tarteaucitronAsk .tarteaucitronAllow span::before, #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronLine.tarteaucitronIsAllowed .tarteaucitronAsk .tarteaucitronAllow span::before, #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronAllow:hover span::before, #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny:hover span::before, .tac_activate .tarteaucitronAllow:hover span::before {
+	color: #ffffff;
+}
+
+/* Bouton « Tout accepter » */
+
+#tarteaucitronAlertBig #tarteaucitronPersonalize2 {
+	background-color: #000000 !important;
+	color: #ffffff;
+}
+
+#tarteaucitronAlertBig #tarteaucitronPersonalize2:hover {
+	background-color: #000000 !important;
+	color: #ffffff;
+}
+
+#tarteaucitronAlertBig #tarteaucitronPersonalize2 span::before, #tarteaucitronAlertBig #tarteaucitronPersonalize2:hover span::before {
+	color: #ffffff;
+}
+
+/* Texte de la barre */
+
+span#tarteaucitronDisclaimerAlert {
+	margin: 1rem 0;
+}
+
+/* Bouton « Politique de confidentialité » */
+
+button#tarteaucitronPrivacyUrl {
+	margin: 1rem 0;
+}
+
+/* Fond « Panneau de gestion des cookies » */
+
+div#tarteaucitronMainLineOffset {
+	background-color: #000000 !important;
+	border: 0 !important;
+}
+
+/* Fond du bloc de texte « En autorisant[...]bon fonctionnement.» */
+
+div#tarteaucitronInfo {
+	background-color: #000000 !important;
+	border: 0;
+}
+
+/* Boutons du panneau de gestion des cookies */
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronAllow, #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny, .tac_activate .tarteaucitronAllow {
+	padding: 1rem 2rem;
+	border-radius: 0;
+	opacity: 1;
+	background-color: #ffffff;
+	color: #000000;
+}
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronAllow:hover, #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny:hover, .tac_activate .tarteaucitronAllow:hover {
+	color: #ffffff;
+}
+
+/* Boutons « Tout refuser » et « Interdire » */
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine.tarteaucitronIsDenied .tarteaucitronDeny, #tarteaucitron #tarteaucitronServices #tarteaucitronAllDenied.tarteaucitronIsSelected, #tarteaucitron #tarteaucitronServices #tarteaucitronAllDenied2.tarteaucitronIsSelected, #tarteaucitronAlertBig #tarteaucitronCloseAlert:hover, #tarteaucitronPrivacyUrlDialog:hover, .tarteaucitronDeny:hover {
+	background-color: #000000 !important;
+	color: #ffffff !important;
+}
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine.tarteaucitronIsDenied .tarteaucitronDeny span::before, #tarteaucitron #tarteaucitronServices #tarteaucitronAllDenied.tarteaucitronIsSelected span::before, #tarteaucitron #tarteaucitronServices #tarteaucitronAllDenied2.tarteaucitronIsSelected span::before, #tarteaucitronAlertBig #tarteaucitronCloseAlert:hover span::before, #tarteaucitronPrivacyUrlDialog:hover span::before, .tarteaucitronDeny:hover span::before {
+	color: #ffffff !important;
+}
+
+/* Boutons « Tout accepter » et « Autoriser » */
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine.tarteaucitronIsAllowed .tarteaucitronAsk .tarteaucitronAllow, #tarteaucitron #tarteaucitronServices #tarteaucitronAllAllowed.tarteaucitronIsSelected, .tarteaucitronAllow:hover {
+	background-color: #000000 !important;
+	color: #ffffff;
+}
+
+/* Picto du bouton « Tout accepter » */
+
+#tarteaucitronRoot .tarteaucitronCheck::before {
+	color: #ffffff;
+	margin-right: .5rem;
+}
+
+/* Bouton « + Mesure d'audience » */
+
+button.catToggleBtn {
+	background-color: #000000 !important;
+}
+
+/* Bouton « Fermer » */
+
+button#tarteaucitronClosePanel {
+	font-size: 14px !important;
+	padding: 8px !important;
+	background-color: var(--bs-red) !important;
+}
+
+/* Bordures inutiles */
+
+.tarteaucitronBorder {
+	border: 0 !important;
+}
+
+#tarteaucitronServices {
+	overflow-x: inherit !important;
+}
+
+@media (max-width: 767px) {
+	/* Texte de la barre */
+	span#tarteaucitronDisclaimerAlert {
+		margin: 1rem 0 2rem;
+	}
+}

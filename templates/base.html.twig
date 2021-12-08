@@ -1,19 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			SnowTricks ~
+			{% block title %}Bienvenue sur votre site communautaire consacré au snowboard !
+			{% endblock %}
+		</title>
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+		{% block headerStylesheets %}
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+			<link rel="stylesheet" href="./css/style.css">
+		{% endblock %}
+
+		{% block favicon %}
+			<link rel="icon" href="favicon.ico">
+		{% endblock %}
+	</head>
+
+	<body id="">
+		{% block body %}
+			<nav id="nav-main" class="sticky-top scrollTop">
+				<div class="navbar py-0 d-lg-none">
+					<a href="/" class="d-inline-block"><img src="./img/logo-snowtricks-longx45.png" alt="Snowtricks &mdash; Site communautaire dédié au snowboard" class="d-lg-none px-3"></a>
+					<button class="nav__toggler d-lg-none">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+				</div>
+
+				<div class="nav__items container-fluid d-lg-flex justify-content-between align-items-center">
+					<a href="/" class="d-inline-block"><img src="./img/logo-snowtricks-longx45.png" alt="Snowtricks &mdash; Site communautaire dédié au snowboard" class="d-lg-inline-block d-none"></a>
+					<ul>
+						<li>
+							<a href="/">Accueil</a>
+						</li>
+						<li>
+							<a href="figures">Figures</a>
+						</li>
+						{% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+							<li>
+								<a href="{{ path('app_login') }}">Connexion</a>
+							</li>
+							<li>
+								<a href="{{ path('app_register') }}">Inscription</a>
+							</li>
+						{% else %}
+							<li>
+								<a href="{{ path('app_logout') }}">Déconnexion</a>
+							</li>
+						{% endif %}
+					</ul>
+				</div>
+			</nav>
+
+			<main>
+				<div id="main__wrapper">
+					{% block main %}{% endblock %}
+				</div>
+			</main>
+			{% block footer %}
+				<footer id="footer-main" class="text-lg-start text-center bg-white">
+					<div class="container">
+						<img src="./img/logo-snowtricks-rondx70.png" alt="Logo de SnowTricks" class="img-fluid">
+						<nav id="nav-legal-notice" class="mt-4">
+							<ul class="list-unstyled ps-0 mb-0">
+								<li>Copyright © 2021</li>
+								<li>
+									<a href="#">Mentions légales</a>
+								</li>
+								<li>
+									<a href="#">Gestion des cookies</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</footer>
+			{% endblock %}
+			{% block scrollButton %}
+				<button id="scrollArrow" title="Revenir en haut de la page">
+					<i class="fas fa-arrow-down"></i>
+				</button>
+			{% endblock %}
+			{% block footerStylesheets %}
+				<link rel="preconnect" href="https://fonts.googleapis.com">
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+				<link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+				<link rel="stylesheet" href="./vendor/fontawesome/css/all.min.css">
+				<link rel="stylesheet" href="./vendor/tarteaucitron/css/tarteaucitron.css">
+				<link rel="stylesheet" href="./css/cookiebar-customization.css">
+				<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+				<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+			{% endblock %}
+			{% block footerJavascripts %}
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+				<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.2/tinymce.min.js" integrity="sha512-MbhLUiUv8Qel+cWFyUG0fMC8/g9r+GULWRZ0axljv3hJhU6/0B3NoL6xvnJPTYZzNqCQU3+TzRVxhkE531CLKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+				<script src="./js/navbar.js"></script>
+				<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+				<script src="./js/script.js"></script>
+				<script src="./vendor/tarteaucitron/tarteaucitron.js"></script>
+				<script src="./js/cookiebar.js"></script>
+			{% endblock %}
+		{% endblock %}
+	</body>
 </html>
