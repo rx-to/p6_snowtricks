@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AuthentificatorAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         if ($this->security->getUser())
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_home');
 
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -66,13 +66,10 @@ class RegistrationController extends AbstractController
                     ->subject('SnowTricks | Confirmation de votre adresse email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
 
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            $this->addFlash('warning', 'Un email de confirmation vous a été envoyé afin de finaliser votre inscription.');
+
+            return $this->redirectToRoute('app_register');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -104,8 +101,10 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Votre adresse email a bien été vérifiée.');
+        if (!$user->isVerified())
+            $this->addFlash('success', 'Votre adresse email a bien été vérifiée.');
+        else
+            $this->addFlash('warning', 'Votre adresse email a déjà été vérifiée.');
 
         return $this->redirectToRoute('app_register');
     }

@@ -13,12 +13,20 @@
 				</div>
 			{% endif %}
 
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+
 			{{ form_label(registrationForm.username, 'Pseudo', {'label_attr': {'class': 'label-custom'}}) }}
-			{{ form_widget(registrationForm.username, {'attr': {'class': 'input-custom'}}) }}
+			{{ form_widget(registrationForm.username, {'attr': {'class': 'input-custom', 'placeholder': 'Pseudo'}}) }}
 			{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'label-custom'}}) }}
-			{{ form_widget(registrationForm.email, {'attr': {'class': 'input-custom'}}) }}
+			{{ form_widget(registrationForm.email, {'attr': {'class': 'input-custom', 'placeholder': 'Email'}}) }}
 			{{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'label-custom'}}) }}
-			{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input-custom'}}) }}
+			{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input-custom', 'placeholder': 'Mot de passe'}}) }}
 			<button type="submit" class="cta">S'inscrire</button>
 			<p class="mb-0">
 				<a href="connexion">Déjà inscrit(e) ?</a>
