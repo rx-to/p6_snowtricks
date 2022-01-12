@@ -30,11 +30,11 @@ main {
 }
 
 hr:not([size]) {
-    height: 2px;
-    margin: 4rem auto;
-    max-width: 90rem;
-    opacity: 1;
-    background-color: #e7e7e7;
+	height: 2px;
+	margin: 4rem auto;
+	max-width: 90rem;
+	opacity: 1;
+	background-color: #e7e7e7;
 }
 
 section,
@@ -196,6 +196,26 @@ input + label {
 	margin-bottom: 0;
 }
 
+.form-switch input#_remember_me {
+	height: 2.4rem;
+	width: 4rem;
+}
+
+.form-switch .label-custom {
+	display: inline-block;
+	margin-left: 1.5rem;
+}
+
+.form-check.form-switch {
+	display: inline-block;
+	margin-left: -5.25rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--san-marino);
+    border-color: var(--san-marino);
+}
+
 /* Links & Buttons */
 
 a {
@@ -236,7 +256,8 @@ button,
 	transition: all 0.3s ease-in-out;
 }
 
-nav .nav__toggler span, .trick__actions {
+nav .nav__toggler span,
+.trick__actions {
 	transition: 0.5s all ease-in-out;
 }
 
@@ -332,28 +353,28 @@ nav .nav__toggler span:nth-child(2) {
 }
 
 .trick__header:hover .trick__actions {
-    opacity: 1;
-    visibility: visible;
+	opacity: 1;
+	visibility: visible;
 }
 
 .trick__actions {
-    display: inline-block;
-    background-color: #00000080;
-    padding: 1rem 1.5rem;
+	display: inline-block;
+	background-color: #00000080;
+	padding: 1rem 1.5rem;
 	z-index: 100;
 }
 
 .trick__header .trick__actions {
 	opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    right: 0;
-    top: 0;
+	visibility: hidden;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 
 .trick__actions a {
-    color: #fff;
-    margin: 0 1rem;
+	color: #fff;
+	margin: 0 1rem;
 }
 
 /* Comments */
