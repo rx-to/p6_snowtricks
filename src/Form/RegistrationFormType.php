@@ -24,7 +24,7 @@ class RegistrationFormType extends AbstractType
                 'error_bubbling' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir un pseudo'
+                        'message' => 'Veuillez saisir un pseudo.'
                     ]),
                     new Length([
                         'min'        => 3,
@@ -38,13 +38,13 @@ class RegistrationFormType extends AbstractType
                 'error_bubbling' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir une adresse email'
+                        'message' => 'Veuillez saisir une adresse email.'
                     ]),
                     new Length([
                         'min'        => 5,
                         'minMessage' => 'Votre adresse eemail est trop courte.',
                         'max'        => 255,
-                        'maxMessage' => 'Votre adresse email ne peut pas excéder 255 caractères'
+                        'maxMessage' => 'Votre adresse email ne peut pas excéder 255 caractères.'
                     ])
                 ]
             ])
@@ -56,7 +56,7 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir un mot de passe',
+                        'message' => 'Veuillez saisir un mot de passe.',
                     ]),
                     new Regex([
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
