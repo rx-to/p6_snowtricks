@@ -216,6 +216,30 @@ input + label {
     border-color: var(--san-marino);
 }
 
+span#select2-category-container {
+    line-height: 36px;
+}
+
+span.select2-selection.select2-selection--single {
+    height: 36px;
+    border: 0;
+    border-bottom: solid 2px var(--san-marino);
+    border-radius: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: var(--san-marino) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #757575 !important;
+    font-family: "PT Sans", sans-serif;
+}
+
 /* Links & Buttons */
 
 a {
@@ -246,6 +270,18 @@ a:hover,
 .cta:hover {
 	background-color: transparent;
 	border-color: var(--san-marino);
+}
+
+.cta-white {
+    background-color: transparent;
+    border-color: #fff;
+    color: #fff;
+}
+
+.cta-white:hover {
+    background-color: #fff;
+    color: var(--san-marino);
+	border-color: #fff;
 }
 
 /* Animations / Transitions */

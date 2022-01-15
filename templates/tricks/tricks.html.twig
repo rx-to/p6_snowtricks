@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block slug %}figures
+{% endblock %}
+{% block title %}Figures
+{% endblock %}
+
+{% block main %}
+	<section>
+		<h1 class="h1 mt-4 text-white">Figures</h1>
+
+		<div class="section">
+			<div class="container">
+            <a href="{{ path('app_new_trick') }}" class="cta cta-white"><i class="fa fa-plus me-3"></i>Nouvelle figure</a>
+				{% include 'tricks/tricks-block.inc.html.twig' %}
+			</div>
+		</div>
+	</section>
+{% endblock %}
