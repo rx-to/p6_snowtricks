@@ -1,3 +1,9 @@
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+	<a href="{{ path('app_new_trick') }}" class="cta{% if app.request.get('_route') != 'app_home' %} cta-white{% endif %}">
+		<i class="fa fa-plus me-3"></i>Nouvelle figure
+	</a>
+{% endif %}
+
 <ul class="row row-cols-xl-5 row-cols-lg-3 row-cols-sm-2 row-cols-1 list-unstyled tricklist">
 	{% for trick in tricks %}
 		<li class="col">

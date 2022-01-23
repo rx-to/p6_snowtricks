@@ -13,9 +13,9 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // redirect to homepage if user is currently logged in
-        if ($this->getUser()) {
+        if ($this->getUser())
             return $this->redirectToRoute('app_home');
-        }
+
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

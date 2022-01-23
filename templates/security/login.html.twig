@@ -26,10 +26,10 @@
 
 			<button class="cta" type="submit">Connexion</button>
 			<p>
-				<a href="">Mot de passe oublié ?</a>
+				<a href="{{ absolute_url(path('app_forgot_password_request')) }}">Mot de passe oublié ?</a>
 			</p>
 			<p class="mb-0">
-				<a href="inscription">Pas encore inscrit(e) ?</a>
+				<a href="{{ absolute_url(path('app_register')) }}">Pas encore inscrit(e) ?</a>
 			</p>
 		</div>
 

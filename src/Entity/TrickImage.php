@@ -33,6 +33,11 @@ class TrickImage
      */
     private $trick;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isThumbnail;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class TrickImage
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getIsThumbnail(): ?bool
+    {
+        return $this->isThumbnail;
+    }
+
+    public function setIsThumbnail(bool $isThumbnail): self
+    {
+        $this->isThumbnail = $isThumbnail;
 
         return $this;
     }

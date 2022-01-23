@@ -1,0 +1,5 @@
+<p>Bonjour !
+Afin de réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous :<br>
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">&gt; Réinitialiser mon mot de passe</a><br>
+Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.<br>
+Hâte de vous retrouver sur SnowTricks ! ;)</p>

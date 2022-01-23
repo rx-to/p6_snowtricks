@@ -39,18 +39,18 @@
 							<a href="/">Accueil</a>
 						</li>
 						<li>
-							<a href="figures">Figures</a>
+							<a href="{{ absolute_url(path('app_tricks')) }}">Figures</a>
 						</li>
 						{% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 							<li>
-								<a href="{{ path('app_login') }}">Connexion</a>
+								<a href="{{ absolute_url(path('app_login')) }}">Connexion</a>
 							</li>
 							<li>
-								<a href="{{ path('app_register') }}">Inscription</a>
+								<a href="{{ absolute_url(path('app_register')) }}">Inscription</a>
 							</li>
 						{% else %}
 							<li>
-								<a href="{{ path('app_logout') }}">Déconnexion</a>
+								<a href="{{ absolute_url(path('app_logout')) }}">Déconnexion</a>
 							</li>
 						{% endif %}
 					</ul>

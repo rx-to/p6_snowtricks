@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe &mdash; Étape n°2
+{% endblock %}
+
+{% block main %}
+	<h1 class="h1 text-white">Réinitialisation du<br>mot de passe</h1>
+	{{ form_start(resetForm, {'attr': {'class': 'form-custom section'}}) }}
+	    {% if form_errors(resetForm) %}
+		<div class="text-danger">
+			{{ form_errors(resetForm)|nl2br }}
+		</div>
+	    {% endif %}
+	    {{ form_label(resetForm.plainPassword.first, 'Nouveau mot de passe', {'label_attr': {'class': 'label-custom'}}) }}
+	    {{ form_widget(resetForm.plainPassword.first, {'attr': {'class': 'input-custom', 'placeholder': 'Nouveau mot de passe'}}) }}
+	    {{ form_label(resetForm.plainPassword.second, 'Confirmation du mot de passe', {'label_attr': {'class': 'label-custom'}}) }}
+	    {{ form_widget(resetForm.plainPassword.second, {'attr': {'class': 'input-custom', 'placeholder': 'Confirmation du mot de passe'}}) }}
+	    <button class="cta mb-0">Valider</button>
+	{{ form_end(resetForm) }}
+{% endblock %}
