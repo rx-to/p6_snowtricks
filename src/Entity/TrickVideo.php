@@ -18,31 +18,19 @@ class TrickVideo
     private $id;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $embed_code;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Trick::class)
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trickVideos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $trick;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $embed_code;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEmbedCode(): ?string
-    {
-        return $this->embed_code;
-    }
-
-    public function setEmbedCode(string $embed_code): self
-    {
-        $this->embed_code = $embed_code;
-
-        return $this;
     }
 
     public function getTrick(): ?Trick
@@ -53,6 +41,18 @@ class TrickVideo
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getEmbedCode(): ?string
+    {
+        return $this->embed_code;
+    }
+
+    public function setEmbedCode(string $embed_code): self
+    {
+        $this->embed_code = $embed_code;
 
         return $this;
     }

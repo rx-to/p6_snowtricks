@@ -23,20 +23,10 @@ class TrickImage
     private $url;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $upload_date;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Trick::class)
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trickImages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $trick;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isThumbnail;
 
     public function getId(): ?int
     {
@@ -55,18 +45,6 @@ class TrickImage
         return $this;
     }
 
-    public function getUploadDate(): ?\DateTimeInterface
-    {
-        return $this->upload_date;
-    }
-
-    public function setUploadDate(\DateTimeInterface $upload_date): self
-    {
-        $this->upload_date = $upload_date;
-
-        return $this;
-    }
-
     public function getTrick(): ?Trick
     {
         return $this->trick;
@@ -75,18 +53,6 @@ class TrickImage
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
-
-        return $this;
-    }
-
-    public function getIsThumbnail(): ?bool
-    {
-        return $this->isThumbnail;
-    }
-
-    public function setIsThumbnail(bool $isThumbnail): self
-    {
-        $this->isThumbnail = $isThumbnail;
 
         return $this;
     }
