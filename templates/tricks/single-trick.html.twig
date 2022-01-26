@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+{% block slug %}template-figure
+{% endblock %}
+{% block title %}Figure : {{ trick.title }}
+{% endblock %}
+
+{% block main %}
+<div class="bg-white position-relative trick-template">
+    <article>
+        <header class="trick__header">
+            <div class="trick__actions">
+                <a href="tpl-creation-edition-figure.php"><i class="fad fa-edit"></i></a>
+                <a href="#"><i class="fad fa-trash"></i></a>
+            </div>
+            <h1 class="h1">Nom de la figure</h1>
+        </header>
+        <div class="section pb-0" id="trick__medias">
+            <div class="container">
+                <div class="row">
+                     <div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+                        <img src="{{ absolute_url(asset('upload/tricks/536/trick-default.png')) }}" alt="{{ trick.title }} &mdash; Image n°1" class="img-fluid">
+                    </div>
+                     <div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+                        <img src="{{ absolute_url(asset('upload/tricks/536/trick-default.png')) }}" alt="{{ trick.title }} &mdash; Image n°2" class="img-fluid">
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+                        <img src="{{ absolute_url(asset('upload/tricks/536/trick-default.png')) }}" alt="{{ trick.title }} &mdash; Image n°3" class="img-fluid">
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 text-center">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
+                    </div>
+                </div>
+                <div class="text-center d-block d-lg-none">
+                    <button class="cta mb-0 btn-hide-medias" data-target="#trick__medias" data-action="fadeOut">Cacher les médias</button>
+                </div>
+            </div>
+        </div>
+        <div class="text-center d-block d-lg-none">
+            <button class="cta mb-0 btn-see-medias" data-target="#trick__medias">Voir les médias</button>
+        </div>
+
+
+        <div class="section pb-0">
+            <div class="container container-custom">
+                <p>Le snowboard freestyle (anglicisme) ou la planche acrobatique de neige1 (ou artistique) est la pratique de la planche à neige de figures, apparue dans les années 1980 et héritière du skateboard. Cette discipline de planche acrobatique consiste pour ses pratiquants à exécuter des figures libres lors de sauts pratiqués à l'aide de structures diverses utilisées comme tremplin. Elle a principalement lieu dans des zones spéciales dédiées comme les snowparks ou en milieu urbain. Elle peut aussi être pratiquée en hors-piste (backcountry en anglais). Cette discipline est considérée comme un sport extrême.</p>
+                <p>Le snowboardeur qui pratique le snowboard freestyle est appelé freestyleur (freestyler), ou plus généralement rideur (rider). Les épreuves de snowboard freestyle disputées en Coupe du monde, aux championnats du monde et aux Jeux olympiques sont le half-pipe, le slopestyle, le big air et le snowboard-cross...</p>
+                <ul class="trick__info d-md-flex justify-content-between">
+                    <li><span class="fw-bold">Groupe :</span> Exemple de groupe</li>
+                    <li class="my-2 my-md-0"><span class="fw-bold">Créé le :</span> 03/11/2021 à 10:00:00</li>
+                    <li><span class="fw-bold">Modifié le :</span> 06/11/2021 à 15:21:00</>
+                </ul>
+            </div>
+        </div>
+    </article>
+
+    <div class="section pt-0">
+        <div class="container">
+            <hr>
+            <form method="post" action="" class="container container-custom">
+                <textarea name="comment" id="comment" rows="5" placeholder="Votre commentaire..." class="input-custom"></textarea>
+                <div class="text-center">
+                    <button class="cta mb-0">Envoyer</button>
+                </div>
+            </form>
+            <hr>
+            <p class="h2">10 commentaires</p>
+            <ul class="comment-list list-unstyled container container-custom">
+                <li>
+                    <article class="comment row">
+                        <div class="comment__avatar-container col-auto">
+                            <span>Pseudo</span>
+                            <img src="./assets/img/avatar-default.jpg" alt="Avatar">
+                        </div>
+                        <div class="comment__content col">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend, pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="comment row">
+                        <div class="comment__avatar-container col-auto">
+                            <span>Pseudo</span>
+                            <img src="./assets/img/avatar-default.jpg" alt="Avatar">
+                        </div>
+                        <div class="comment__content col">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend, pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="comment row">
+                        <div class="comment__avatar-container col-auto">
+                            <span>Pseudo</span>
+                            <img src="./assets/img/avatar-default.jpg" alt="Avatar">
+                        </div>
+                        <div class="comment__content col">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend, pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="comment row">
+                        <div class="comment__avatar-container col-auto">
+                            <span>Pseudo</span>
+                            <img src="./assets/img/avatar-default.jpg" alt="Avatar">
+                        </div>
+                        <div class="comment__content col">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend, pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article class="comment row">
+                        <div class="comment__avatar-container col-auto">
+                            <span>Pseudo</span>
+                            <img src="./assets/img/avatar-default.jpg" alt="Avatar">
+                        </div>
+                        <div class="comment__content col">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend, pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
+                        </div>
+                    </article>
+                </li>
+            </ul>
+            <div class="text-center">
+                <button class="cta mb-0">+ de commentaires</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

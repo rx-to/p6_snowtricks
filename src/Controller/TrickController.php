@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller;
+use App\Entity\Trick;
 use App\Repository\TrickRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +19,13 @@ class TrickController extends AbstractController
     {
         $repository = new TrickRepository($managerRegistry);
         $tricks     = $repository->findAll();
-        dd($tricks);
         return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks]);
+    }
+
+    #[Route('/figure/{id}-{slug}/', name: 'app_single_trick')]
+    public function singleTrick(Trick $trick): Response
+    {
+        return $this->render('tricks/single-trick.html.twig', ['trick' => $trick]);
     }
 
     #[Route('/nouvelle-figure/', name: 'app_new_trick'), IsGranted("ROLE_USER")]

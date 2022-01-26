@@ -8,9 +8,9 @@
 	{% for trick in tricks %}
 		<li class="col">
 			<figure class="tricklist__item">
-				<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="{{ trick.title }}" class="img-fluid">
+				<img src="{{ absolute_url(asset('upload/tricks/536/trick-default.png')) }}" alt="{{ trick.title }}" class="img-fluid">
 				<figcaption>
-					<a href="tpl-figure">{{ trick.title }}</a>
+					<a href="{{ path('app_single_trick', {slug: trick.title|slugify, id: trick.id}) }}">{{ trick.title }}</a>
 					<div class="tricklist__item__actions">
 						<a href="#" class="me-2">
 							<i class="fa fa-edit"></i>

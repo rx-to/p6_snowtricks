@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -60,6 +61,11 @@ class Trick
      * @ORM\OneToMany(targetEntity=TrickVideo::class, mappedBy="trick", orphanRemoval=true)
      */
     private $trickVideos;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_draft;
 
     public function __construct()
     {
@@ -200,6 +206,18 @@ class Trick
                 $trickVideo->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsDraft(): ?bool
+    {
+        return $this->is_draft;
+    }
+
+    public function setIsDraft(bool $is_draft): self
+    {
+        $this->is_draft = $is_draft;
 
         return $this;
     }

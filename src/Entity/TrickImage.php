@@ -20,7 +20,7 @@ class TrickImage
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $url;
+    private $filename;
 
     /**
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trickImages")
@@ -28,19 +28,26 @@ class TrickImage
      */
     private $trick;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_thumbnail;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getFilename(): ?string
     {
-        return $this->url;
+        if(!$this->filename)
+            $this->setFilename('trick-default.png');
+        return $this->filename;
     }
 
-    public function setUrl(string $url): self
+    public function setFilename(string $filename): self
     {
-        $this->url = $url;
+        $this->filename = $filename;
 
         return $this;
     }
@@ -53,6 +60,18 @@ class TrickImage
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getIsThumbnail(): ?bool
+    {
+        return $this->is_thumbnail;
+    }
+
+    public function setIsThumbnail(bool $is_thumbnail): self
+    {
+        $this->is_thumbnail = $is_thumbnail;
 
         return $this;
     }
