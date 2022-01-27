@@ -27,7 +27,7 @@ $('.btn-hide-medias').on('click', function(){
 });
 
 tinymce.init({
-    selector: 'textarea',
+    selector: '.tinymce',
     plugin: 'a_tinymce_plugin',
     a_plugin_option: true,
     a_configuration_option: 400

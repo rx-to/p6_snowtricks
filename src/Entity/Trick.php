@@ -67,10 +67,21 @@ class Trick
      */
     private $is_draft;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TrickMessage::class, mappedBy="trick", orphanRemoval=true)
+     */
+    private $trickMessages;
+
     public function __construct()
     {
         $this->trickImages = new ArrayCollection();
         $this->trickVideos = new ArrayCollection();
+        $this->trickMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +229,48 @@ class Trick
     public function setIsDraft(bool $is_draft): self
     {
         $this->is_draft = $is_draft;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrickMessage[]
+     */
+    public function getTrickMessages(): Collection
+    {
+        return $this->trickMessages;
+    }
+
+    public function addTrickMessage(TrickMessage $trickMessage): self
+    {
+        if (!$this->trickMessages->contains($trickMessage)) {
+            $this->trickMessages[] = $trickMessage;
+            $trickMessage->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrickMessage(TrickMessage $trickMessage): self
+    {
+        if ($this->trickMessages->removeElement($trickMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($trickMessage->getTrick() === $this) {
+                $trickMessage->setTrick(null);
+            }
+        }
 
         return $this;
     }

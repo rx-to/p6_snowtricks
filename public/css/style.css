@@ -382,7 +382,7 @@ nav .nav__toggler span:nth-child(2) {
 	justify-content: center;
 	align-items: center;
 	height: 50vh;
-	background: url(https://miro.medium.com/max/5926/1*7P5iQMBULsop8F75MdJhSg.jpeg) no-repeat center / cover;
+	/* background: url(https://miro.medium.com/max/5926/1*7P5iQMBULsop8F75MdJhSg.jpeg) no-repeat center / cover; */
 }
 
 .trick__header::after {
@@ -393,7 +393,7 @@ nav .nav__toggler span:nth-child(2) {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-color: #0000004d;
+	background-color: #00000066;
 }
 
 .trick__header .h1 {
@@ -408,11 +408,6 @@ nav .nav__toggler span:nth-child(2) {
 	text-align: center;
 }
 
-.trick__header:hover .trick__actions {
-	opacity: 1;
-	visibility: visible;
-}
-
 .trick__actions {
 	display: inline-block;
 	background-color: #00000080;
@@ -421,8 +416,6 @@ nav .nav__toggler span:nth-child(2) {
 }
 
 .trick__header .trick__actions {
-	opacity: 0;
-	visibility: hidden;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -431,6 +424,16 @@ nav .nav__toggler span:nth-child(2) {
 .trick__actions a {
 	color: #fff;
 	margin: 0 1rem;
+}
+
+.trick__medias-wrapper {
+	margin: -1rem 0;
+}
+
+.video-wrapper iframe {
+	width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 /* Comments */
@@ -666,7 +669,7 @@ nav .nav__toggler span:nth-child(2) {
 	#header-home h1 {
 		font-size: 3rem;
 	}
-	#trick__medias {
+	.trick__medias {
 		display: none;
 	}
 	#footer-main {

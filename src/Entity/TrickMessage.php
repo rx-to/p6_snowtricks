@@ -39,7 +39,7 @@ class TrickMessage
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Trick::class)
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trickMessages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $trick;
@@ -108,4 +108,5 @@ class TrickMessage
 
         return $this;
     }
+
 }

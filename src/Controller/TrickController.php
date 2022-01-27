@@ -22,7 +22,7 @@ class TrickController extends AbstractController
         return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks]);
     }
 
-    #[Route('/figure/{id}-{slug}/', name: 'app_single_trick')]
+    #[Route('/figure/{slug<[0-9]+-[a-z0-9-]+>}/', name: 'app_single_trick')]
     public function singleTrick(Trick $trick): Response
     {
         return $this->render('tricks/single-trick.html.twig', ['trick' => $trick]);
