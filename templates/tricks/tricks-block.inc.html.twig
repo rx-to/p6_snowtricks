@@ -4,26 +4,12 @@
 	</a>
 {% endif %}
 
-<ul class="row row-cols-xl-5 row-cols-lg-3 row-cols-sm-2 row-cols-1 list-unstyled tricklist">
-	{% for trick in tricks %}
-		<li class="col">
-			<figure class="tricklist__item">
-				<img src="{{ absolute_url(asset('upload/tricks/536/trick-default.png')) }}" alt="{{ trick.title }}" class="img-fluid">
-				<figcaption>
-					<a href="{{ path('app_single_trick', {slug: trick.slug}) }}">{{ trick.title }}</a>
-					<div class="tricklist__item__actions">
-						<a href="#" class="me-2">
-							<i class="fa fa-edit"></i>
-						</a>
-						<a href="#">
-							<i class="fa fa-trash-alt"></i>
-						</a>
-					</div>
-				</figcaption>
-			</figure>
-		</li>
-	{% endfor %}
-</ul>
+{% block tricklist %}
+	<ul class="row row-cols-xl-5 row-cols-lg-3 row-cols-sm-2 row-cols-1 list-unstyled tricklist">
+		{% include 'tricks/tricklist.inc.html.twig' %}
+	</ul>
+{% endblock %}
+
 <div class="text-center">
-	<button class="cta">+ de figures</button>
+	<button class="cta" id="btn-see-more-tricks">+ de figures</button>
 </div>

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -54,11 +55,13 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=TrickImage::class, mappedBy="trick", orphanRemoval=true)
+     * @MaxDepth(2) 
      */
     private $trickImages;
 
     /**
      * @ORM\OneToMany(targetEntity=TrickVideo::class, mappedBy="trick", orphanRemoval=true)
+     * @MaxDepth(2) 
      */
     private $trickVideos;
 
@@ -74,6 +77,7 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=TrickMessage::class, mappedBy="trick", orphanRemoval=true)
+     * @MaxDepth(2) 
      */
     private $trickMessages;
 

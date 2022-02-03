@@ -23,6 +23,7 @@ class HomeController extends AbstractController
     public function home(Request $request, ManagerRegistry $managerRegistry): Response
     {
         $repository = new TrickRepository($managerRegistry);
-        return $this->render('home.html.twig', ['tricks' => $repository->findAll()]);
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], 15, 0);
+        return $this->render('home.html.twig', ['tricks' => $tricks]);
     }
 }

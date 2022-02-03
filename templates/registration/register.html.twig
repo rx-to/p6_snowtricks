@@ -29,7 +29,7 @@
 			{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'input-custom', 'placeholder': 'Mot de passe'}}) }}
 			<button type="submit" class="cta">S'inscrire</button>
 			<p class="mb-0">
-				<a href="connexion">Déjà inscrit(e) ?</a>
+				<a href="{{ path('app_login') }}">Déjà inscrit(e) ?</a>
 			</p>
 		</div>
 		{{ form_end(registrationForm) }}

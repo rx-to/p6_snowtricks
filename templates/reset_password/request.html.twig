@@ -4,16 +4,18 @@
 {% endblock %}
 
 {% block main %}
-	<h1 class="h1 text-white">Réinitialisation du<br>mot de passe</h1>
-	{{ form_start(requestForm, {'attr': {'class': 'form-custom section'}}) }}
-	<div class="container">
-		{% for flashError in app.flashes('reset_password_error') %}
-			<p class="text-danger" role="alert">{{ flashError|nl2br }}</p>
-		{% endfor %}
-		<p>Veuillez renseigner votre adresse email ci-dessous afin de recevoir un lien pour reinitialiser votre mot de passe.</p>
-		{{ form_label(requestForm.email, 'Email', {'label_attr': {'class': 'label-custom'}}) }}
-		{{ form_widget(requestForm.email, {'attr': {'class': 'input-custom', 'placeholder': 'Email'}}) }}
-		<button class="cta mb-0">Envoyer</button>
-	</div>
+	<section>
+		<h1 class="h1 text-white">Réinitialisation du<br>mot de passe</h1>
+		{{ form_start(requestForm, {'attr': {'class': 'form-custom section'}}) }}
+		<div class="container">
+			{% for flashError in app.flashes('reset_password_error') %}
+				<p class="text-danger" role="alert">{{ flashError|nl2br }}</p>
+			{% endfor %}
+			<p>Veuillez renseigner votre adresse email ci-dessous afin de recevoir un lien pour reinitialiser votre mot de passe.</p>
+			{{ form_label(requestForm.email, 'Email', {'label_attr': {'class': 'label-custom'}}) }}
+			{{ form_widget(requestForm.email, {'attr': {'class': 'input-custom', 'placeholder': 'Email'}}) }}
+			<button class="cta mb-0">Envoyer</button>
+		</div>
+	</section>
 	{{ form_end(requestForm) }}
 {% endblock %}

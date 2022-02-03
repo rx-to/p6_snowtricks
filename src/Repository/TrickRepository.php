@@ -20,20 +20,36 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Trick[] Returns an array of Trick objects
+     * @param int $offset
+     * @return int
      */
-    public function findByExampleField($value)
+    public function countPages($offset): mixed
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn       = $this->getEntityManager()->getConnection();
+        $sql        = "SELECT COUNT(*) `countPages` FROM trick";
+        $stmt       = $conn->prepare($sql);
+        $result     = $stmt->executeQuery([]);
+        $countPages = intval($result->fetchAssociative()['countPages'] / $offset) + 1;
+        
+        return $countPages;
     }
-    
+
+
+    // /**
+    //  * @return Trick[] Returns an array of Trick objects
+    //  */
+    // public function findByExampleField($value)
+    // {
+    //     return $this->createQueryBuilder('t')
+    //         ->andWhere('t.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->orderBy('t.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
 
     /*
     public function findOneBySomeField($value): ?Trick

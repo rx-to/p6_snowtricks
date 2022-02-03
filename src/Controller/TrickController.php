@@ -15,11 +15,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TrickController extends AbstractController
 {
     #[Route('/figures/', name: 'app_tricks')]
-    public function tricks(Request $request, ManagerRegistry $managerRegistry): Response
+    public function tricks(Request $request, ManagerRegistry $managerRegistry, int $offset = 15, int $page = 1): Response
     {
         $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findAll();
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset, $offset * ($page - 1));
+        $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
+
         return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks]);
+    }
+
+    #[Route('/figures/more/', name: 'app_more_tricks', methods: 'POST')]
+    public function moreTricks(Request $request, ManagerRegistry $managerRegistry, int $offset = 15, int $page = 1): Response
+    {
+        $repository = new TrickRepository($managerRegistry);
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset, $offset * ($page - 1));
+        $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
+        $countPages = $repository->countPages($offset);
+        return $this->json(['tricklist'  => $render, 'countPages' => $countPages]);
     }
 
     #[Route('/figure/{slug<[0-9]+-[a-z0-9-]+>}/', name: 'app_single_trick')]
@@ -28,9 +40,9 @@ class TrickController extends AbstractController
         return $this->render('tricks/single-trick.html.twig', ['trick' => $trick]);
     }
 
-    #[Route('/nouvelle-figure/', name: 'app_new_trick'), IsGranted("ROLE_USER")]
-    public function newTrick(Request $request): Response
-    {
-        return $this->render('tricks/edit-trick.html.twig');
-    }
+    // #[Route('/nouvelle-figure/', name: 'app_new_trick'), IsGranted("ROLE_USER")]
+    // public function newTrick(Request $request): Response
+    // {
+    //     return $this->render('tricks/edit-trick.html.twig');
+    // }
 }
