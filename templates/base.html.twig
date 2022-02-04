@@ -5,9 +5,10 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
-			
+
 			{% block title %}Bienvenue sur votre site communautaire consacré au snowboard !
-			{% endblock %} ~ SnowTricks
+			{% endblock %}
+			~ SnowTricks
 		</title>
 
 		{% block headerStylesheets %}
@@ -68,7 +69,8 @@
 						<img src="{{ absolute_url(asset('img/logo-snowtricks-rondx70.png')) }}" alt="Logo de SnowTricks" class="img-fluid">
 						<nav id="nav-legal-notice" class="mt-4">
 							<ul class="list-unstyled ps-0 mb-0">
-								<li>Copyright © 2021</li>
+								<li>Copyright © 2021 -
+									{{ 'now'|date('Y') }}</li>
 								<li>
 									<a href="#">Mentions légales</a>
 								</li>

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+	<h1 class="h1 text-white">Page introuvable</h1>
+
+	<p class="h2 text-white">Oups ! La page à laquelle vous tentez d'accéder est introuvable. &#x1F615;</p>
+	<p class="text-center">
+		<a href="{{ path('app_home') }}" class="cta">Revenir à l'accueil</a>
+	</p>
+{% endblock %}
