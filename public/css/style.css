@@ -260,6 +260,16 @@ span.select2-selection.select2-selection--single {
 	font-family: "PT Sans", sans-serif;
 }
 
+/* Popups */
+
+.modal-content {
+    border-radius: 15px;
+}
+
+.modal-header, .modal-footer, .modal-body {
+    padding: 1rem 1.25rem;
+}
+
 /* Links & Buttons */
 
 a {
@@ -269,6 +279,7 @@ a {
 
 a:hover,
 .cta:hover,
+button:not(.btn):hover,
 #scroll-arrow:hover {
 	color: var(--san-marino) !important;
 }
@@ -302,6 +313,26 @@ a:hover,
 	background-color: #fff;
 	color: var(--san-marino);
 	border-color: #fff;
+}
+
+button {
+	border: 0;
+}
+
+.btn {
+    font-size: 1.4rem;
+    border-radius: 30px;
+    padding: .5rem 1.5rem;
+}
+
+.btn.btn-danger:hover {
+    color: var(--bs-danger);
+    background: transparent;
+}
+
+.btn.btn-secondary:hover {
+    color: var(--bs-secondary);
+    background: transparent;
 }
 
 /* Animations / Transitions */

@@ -1,4 +1,9 @@
 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+	{% include "tricks/delete-trick-popup.inc.html.twig" %}
+
+	<div class="alert" style="display:none;"></div>
+
 	<a href="{{ path('app_new_trick') }}" class="cta{% if app.request.get('_route') != 'app_home' %} cta-white{% endif %}">
 		<i class="fa fa-plus me-3"></i>Nouvelle figure
 	</a>

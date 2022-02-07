@@ -1,17 +1,23 @@
-<div class="modal" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Suppression d'une figure</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p>La figure <strong>#</strong> va être supprimée. Veuillez confirmer la suppression</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-undo-alt me-3"></i>Annuler</button>
-				<button type="button" class="btn btn-danger"><i class="fas fa-trash-alt me-3"></i>Supprimer</button>
+{% block popup %}
+	<div class="modal fade" id="delete-item-modal" tabindex="-1" aria-labelledby="delete-trick-modal-label" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="modal-title text-uppercase h4">Suppression d'une figure</p>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>La figure
+						<strong>#</strong>
+						va être supprimée. Veuillez confirmer la suppression</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<i class="fas fa-undo-alt me-3"></i>Annuler</button>
+					<button type="button" class="btn btn-danger" data-action="delete-item" data-bs-dismiss="modal">
+						<i class="fas fa-trash-alt me-3"></i>Supprimer</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+{% endblock %}

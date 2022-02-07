@@ -1,7 +1,7 @@
 {% block tricklistItems %}
 		{% for trick in tricks %}
 			<li class="col">
-				<figure class="tricklist__item">
+				<figure class="tricklist__item" data-item-type="figure" data-item-id="{{ trick.id }}">
 					<img src="{{ absolute_url(asset('upload/tricks/536/trick-default.png')) }}" alt="{{ trick.title }}" class="img-fluid">
 					<figcaption>
 						<a href="{{ path('app_single_trick', {slug: trick.slug}) }}">{{ trick.title }}</a>
@@ -9,9 +9,9 @@
 							<a href="#" class="me-2">
 								<i class="fa fa-edit"></i>
 							</a>
-							<a href="#">
+							<button type="button" data-bs-toggle="modal" data-bs-target="#delete-item-modal" data-action="call-popup-delete-item">
 								<i class="fa fa-trash-alt"></i>
-							</a>
+							</button>
 						</div>
 					</figcaption>
 				</figure>

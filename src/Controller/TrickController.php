@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Exception;
 use App\Controller;
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
@@ -18,17 +19,17 @@ class TrickController extends AbstractController
     public function tricks(ManagerRegistry $managerRegistry, int $offset = 15, int $page = 1): Response
     {
         $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset, $offset * ($page - 1));
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset, $offset * $page);
         $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
 
         return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks]);
     }
 
-    #[Route('/figures/more/', name: 'app_more_tricks', methods: 'POST')]
+    #[Route('/figures/voir-plus/', name: 'app_more_tricks', methods: 'POST')]
     public function moreTricks(ManagerRegistry $managerRegistry, int $offset = 15, int $page = 1): Response
     {
         $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset, $offset * ($page - 1));
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset * $page , $offset);
         $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
         $countPages = $repository->countPages($offset);
         return $this->json(['tricklist'  => $render, 'countPages' => $countPages]);
@@ -40,17 +41,27 @@ class TrickController extends AbstractController
         return $this->render('tricks/single-trick.html.twig', ['trick' => $trick]);
     }
 
-    #[Route('/figure/{slug<[0-9]+-[a-z0-9-]+>}/delete/', name: 'app_delete_trick', methods: 'POST')]
-    public function deleteTrick(Trick $trick, ManagerRegistry $managerRegistry): Response
+    #[Route('/figure/supprimer/', name: 'app_delete_trick', methods: 'POST')]
+    public function deleteTrick(Request $request, ManagerRegistry $managerRegistry): Response
     {
+        $id            = $request->get('id');
+        $entityManager = $managerRegistry->getManager();
+        $repository    = new TrickRepository($managerRegistry);
+        $trick         = $repository->find($id);
+
         if ($trick->getAuthor() == $this->getUser()) {
-                $repository = new TrickRepository($managerRegistry);
-                $trickTitle = $trick->getTitle();
-                if ($repository->remove($trick))
-                    $this->addFlash('success', "La figure <strong>$trickTitle</strong> a bien été supprimée.");
+            $entityManager->remove($trick);
+            try {
+                $entityManager->flush();
+                $success = true;
+                $feedback = "La figure <strong>" . $trick->getTitle() . "</strong> a bien été supprimée.";
+            } catch (Exception $e) {
+                $success       = false;
+                $feedback      = "Une erreur est survenue lors de la suppresstion de la figure <strong>" . $trick->getTitle() . "</strong>.";
+            }
         }
 
-        return $this->render('tricks/single-trick.html.twig', ['trick' => $trick]);
+        return $this->json(['success' => $success, 'feedback' => $feedback]);
     }
 
     #[Route('/nouvelle-figure/', name: 'app_new_trick'), IsGranted("ROLE_USER")]
