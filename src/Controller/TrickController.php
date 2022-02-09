@@ -19,20 +19,29 @@ class TrickController extends AbstractController
     public function tricks(ManagerRegistry $managerRegistry, int $offset = 15, int $page = 1): Response
     {
         $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset, $offset * $page);
-        $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
-
-        return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks]);
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset, $offset * ($page - 1));
+        $countPages = $repository->countPages($offset);
+        return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks, 'countPages' => $countPages]);
     }
 
     #[Route('/figures/voir-plus/', name: 'app_more_tricks', methods: 'POST')]
     public function moreTricks(ManagerRegistry $managerRegistry, int $offset = 15, int $page = 1): Response
     {
         $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset * $page , $offset);
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset * $page, $offset);
         $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
         $countPages = $repository->countPages($offset);
-        return $this->json(['tricklist'  => $render, 'countPages' => $countPages]);
+        return $this->json(['list' => $render, 'countPages' => $countPages]);
+    }
+
+    #[Route('/figures/rafraichir/', name: 'app_refresh_tricks', methods: 'POST')]
+    public function refreshTricks(ManagerRegistry $managerRegistry, int $offset = 15, int $pageMax = 1): Response
+    {
+        $repository = new TrickRepository($managerRegistry);
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset * $pageMax, 0);
+        $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
+        $countPages = $repository->countPages($offset);
+        return $this->json(['list' => $render, 'countPages' => $countPages]);
     }
 
     #[Route('/figure/{slug<[0-9]+-[a-z0-9-]+>}/', name: 'app_single_trick')]

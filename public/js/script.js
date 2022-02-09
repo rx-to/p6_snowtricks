@@ -52,33 +52,43 @@ $("#category").select2({
 var page = 1;
 
 $("#btn-see-more-tricks").on("click", function () {
-	let button = $(this);
+	moreItems("figures", $(".tricklist"), $(this));
+});
+
+function moreItems(type, container, button) {
 	page++;
 	$.ajax({
 		method: "POST",
-		url: "/figures/voir-plus/",
+		url: "/" + type + "/voir-plus/",
 		data: { page: page },
 	}).done(function (result) {
-		$(".tricklist").append(result.tricklist.content);
+		container.append(result.list.content);
 		if (page == result.countPages) button.remove();
 	});
-});
+}
 
-function deleteItem(type, id) {
+function deleteItem(type, id, container) {
 	$.ajax({
 		method: "POST",
 		url: "/" + type + "/supprimer/",
 		data: { id: id },
 	}).done(function (result) {
-		let alert = $(".alert");
-		if (result.success) {
-			console.log("inzeboucle");
-			$("*[data-item-type=" + type + "][data-item-id=" + id + "]").remove();
-		}
-		alert
+		if (result.success) refreshItems(type, page, container);
+
+		$(".alert")
 			.toggleClass("alert-" + (result.success ? "success" : "danger"))
 			.html(result.feedback)
 			.fadeIn();
+	});
+}
+
+function refreshItems(type, pageMax, container) {
+	$.ajax({
+		method: "POST",
+		url: "/" + type + "s/rafraichir/",
+		data: { pageMax: pageMax },
+	}).done(function (result) {
+		container.html(result.list.content);
 	});
 }
 
@@ -91,7 +101,8 @@ $(document).on("click", "button[data-action=call-popup-delete-item]", function (
 });
 
 $("button[data-action=delete-item]").on("click", function () {
-	type = modal.attr("data-item-type");
-	id = modal.attr("data-item-id");
-	deleteItem(type, id);
+	let type = modal.attr("data-item-type");
+	let id = modal.attr("data-item-id");
+	let container = $("[data-item-type=" + type + "]").closest(".list");
+	deleteItem(type, id, container);
 });

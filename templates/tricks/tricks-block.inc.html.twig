@@ -10,11 +10,13 @@
 {% endif %}
 
 {% block tricklist %}
-	<ul class="row row-cols-xl-5 row-cols-lg-3 row-cols-sm-2 row-cols-1 list-unstyled tricklist">
+	<ul class="row row-cols-xl-5 row-cols-lg-3 row-cols-sm-2 row-cols-1 list-unstyled tricklist list">
 		{% include 'tricks/tricklist.inc.html.twig' %}
 	</ul>
 {% endblock %}
 
-<div class="text-center">
-	<button class="cta" id="btn-see-more-tricks">+ de figures</button>
-</div>
+{% if countPages > 1 %}
+	<div class="text-center">
+		<button class="cta" id="btn-see-more-tricks">+ de figures</button>
+	</div>
+{% endif %}
