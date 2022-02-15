@@ -49,21 +49,24 @@ $("#category").select2({
 });
 
 /* Tricklist */
-var page = 1;
+var curPage = 1;
+var lastPage;
 
-$("#btn-see-more-tricks").on("click", function () {
+$(document).on("click", "#btn-see-more-tricks", function () {
 	moreItems("figures", $(".tricklist"), $(this));
 });
 
 function moreItems(type, container, button) {
-	page++;
+	curPage++;
 	$.ajax({
 		method: "POST",
 		url: "/" + type + "/voir-plus/",
-		data: { page: page },
+		data: { curPage: curPage },
 	}).done(function (result) {
+		pageMax = result.countPages;
 		container.append(result.list.content);
-		if (page == result.countPages) button.remove();
+		if (curPage == pageMax) button.remove();
+		console.log(curPage + " / " + pageMax);
 	});
 }
 
@@ -73,36 +76,51 @@ function deleteItem(type, id, container) {
 		url: "/" + type + "/supprimer/",
 		data: { id: id },
 	}).done(function (result) {
-		if (result.success) refreshItems(type, page, container);
-
-		$(".alert")
-			.toggleClass("alert-" + (result.success ? "success" : "danger"))
-			.html(result.feedback)
-			.fadeIn();
+		if (result.success) refreshItems(type, curPage, container, result);
 	});
 }
 
-function refreshItems(type, pageMax, container) {
+function refreshItems(type, pageMax, container, feedback) {
 	$.ajax({
 		method: "POST",
 		url: "/" + type + "s/rafraichir/",
 		data: { pageMax: pageMax },
 	}).done(function (result) {
+		curPage = result.curPage;
+		pageMax = result.countPages;
 		container.html(result.list.content);
+		if (feedback) {
+			$(".alert")
+				.toggleClass("alert-" + (feedback.success ? "success" : "danger"))
+				.html(feedback.feedback)
+				.fadeIn();
+			setTimeout(function () {
+				$(".alert").fadeOut();
+			}, 3000);
+		}
 	});
+}
+
+function fillModal(title) {
+	modal.find(".modal-body strong").html(title);
 }
 
 var modal = $("#delete-item-modal");
 
 $(document).on("click", "button[data-action=call-popup-delete-item]", function () {
-	let itemToDelete = $(this).closest("*[data-item-type]");
+	let itemToDelete = $(this).closest("[data-item-type]");
+	let itemTitle = $(this).closest("[data-item-type]").find("figcaption a").html();
+
 	modal.attr("data-item-type", itemToDelete.attr("data-item-type"));
 	modal.attr("data-item-id", itemToDelete.attr("data-item-id"));
+
+	fillModal(itemTitle);
 });
 
 $("button[data-action=delete-item]").on("click", function () {
 	let type = modal.attr("data-item-type");
 	let id = modal.attr("data-item-id");
-	let container = $("[data-item-type=" + type + "]").closest(".list");
+	let container = $(".tricks-block");
+
 	deleteItem(type, id, container);
 });
