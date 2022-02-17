@@ -20,16 +20,16 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $offset
+     * @param int $limit
      * @return int
      */
-    public function countPages($offset): mixed
+    public function countPages($limit): mixed
     {
         $conn       = $this->getEntityManager()->getConnection();
-        $sql        = "SELECT COUNT(*) `countPages` FROM trick";
+        $sql        = "SELECT COUNT(*) `countTricks` FROM trick";
         $stmt       = $conn->prepare($sql);
         $result     = $stmt->executeQuery([]);
-        $countPages = intval($result->fetchAssociative()['countPages'] / $offset) + 1;
+        $countPages = intval(($result->fetchAssociative()['countTricks'] - 1) / $limit) + 1;
         
         return $countPages;
     }

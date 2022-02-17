@@ -52,12 +52,19 @@ $("#category").select2({
 var curPage = 1;
 var lastPage;
 
-$(document).on("click", "#btn-see-more-tricks", function () {
-	moreItems("figures", $(".tricklist"), $(this));
-});
+function buttonEvent(status) {
+	if (status === "on") {
+		$(document).on("click", "#btn-see-more-tricks", function () {
+			moreItems("figures", $(".tricklist"), $(this));
+		});
+	} else {
+		$(document).off("click", "#btn-see-more-tricks");
+	}
+}
 
 function moreItems(type, container, button) {
 	curPage++;
+	buttonEvent("off");
 	$.ajax({
 		method: "POST",
 		url: "/" + type + "/voir-plus/",
@@ -67,6 +74,7 @@ function moreItems(type, container, button) {
 		container.append(result.list.content);
 		if (curPage == pageMax) button.remove();
 		console.log(curPage + " / " + pageMax);
+		buttonEvent("on");
 	});
 }
 
@@ -117,10 +125,12 @@ $(document).on("click", "button[data-action=call-popup-delete-item]", function (
 	fillModal(itemTitle);
 });
 
-$("button[data-action=delete-item]").on("click", function () {
+$(document).on("click", "button[data-action=delete-item]", function () {
 	let type = modal.attr("data-item-type");
 	let id = modal.attr("data-item-id");
 	let container = $(".tricks-block");
 
 	deleteItem(type, id, container);
 });
+
+buttonEvent("on");

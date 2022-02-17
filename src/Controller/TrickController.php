@@ -16,31 +16,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TrickController extends AbstractController
 {
     #[Route('/figures/', name: 'app_tricks')]
-    public function tricks(ManagerRegistry $managerRegistry, int $offset = 15, int $page = 1): Response
+    public function tricks(ManagerRegistry $managerRegistry, int $limit= 15, int $curPage = 1): Response
     {
+        $offset     = $limit * ($curPage - 1);
         $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset, $offset * ($page - 1));
-        $countPages = $repository->countPages($offset);
-        return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks, 'countPages' => $countPages, 'curPage' => $page]);
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $limit, $offset);
+        $countPages = $repository->countPages($limit);
+        return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks, 'countPages' => $countPages, 'curPage' => $curPage]);
     }
 
     #[Route('/figures/voir-plus/', name: 'app_more_tricks', methods: 'POST')]
-    public function moreTricks(ManagerRegistry $managerRegistry, int $offset = 15, int $page = 1): Response
+    public function moreTricks(Request $request, ManagerRegistry $managerRegistry, int $limit= 15): Response
     {
+        $curPage    = $request->get('curPage');
+        $offset     = $limit * ($curPage - 1);
         $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset * $page, $offset);
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $limit, $offset);
         $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
-        $countPages = $repository->countPages($offset);
+        $countPages = $repository->countPages($limit);
         return $this->json(['list' => $render, 'countPages' => $countPages]);
     }
 
     #[Route('/figures/rafraichir/', name: 'app_refresh_tricks', methods: 'POST')]
-    public function refreshTricks(Request $request, ManagerRegistry $managerRegistry, int $offset = 15): Response
+    public function refreshTricks(Request $request, ManagerRegistry $managerRegistry, int $offset = 0, int $limit= 15): Response
     {
         $pageMax    = $request->get('pageMax');
         $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $offset * $pageMax, 0);
-        $countPages = $repository->countPages($offset);
+        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $pageMax * $limit, $offset);
+        $countPages = $repository->countPages($limit);
         $render     = $this->render('tricks/tricks-block.inc.html.twig', ['tricks' => $tricks, 'countPages' => $countPages, 'curPage' => $pageMax]);
         return $this->json(['list' => $render, 'countPages' => $countPages, 'curPage' => $pageMax]);
     }
