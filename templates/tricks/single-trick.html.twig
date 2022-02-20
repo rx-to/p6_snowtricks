@@ -62,7 +62,7 @@
 						<li>
 							<span class="fw-bold">Groupe :</span>
 							{{ trick.category.name }}
-                            </li>
+						</li>
 						<li class="my-2 my-md-0">
 							<span class="fw-bold">Créé le :</span>
 							03/11/2021 à 10:00:00
@@ -88,87 +88,7 @@
 					</div>
 				</form>
 				<hr>
-				<p class="h2">10 commentaires</p>
-				<ul class="comment-list list-unstyled container container-custom px-0 px-lg-4">
-					<li>
-						<article class="comment row">
-							<div class="comment__avatar-container col-auto">
-								<span>Pseudo</span>
-								<img src="./assets/img/avatar-default.jpg" alt="Avatar">
-							</div>
-							<div class="comment__content col">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor
-																																								                                auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum
-																																								                                primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend,
-																																								                                pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac
-																																								                                elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
-							</div>
-						</article>
-					</li>
-					<li>
-						<article class="comment row">
-							<div class="comment__avatar-container col-auto">
-								<span>Pseudo</span>
-								<img src="./assets/img/avatar-default.jpg" alt="Avatar">
-							</div>
-							<div class="comment__content col">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor
-																																																									                            auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum
-																																																									                            primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend,
-																																																									                            pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac
-																																																									                            elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
-							</div>
-						</article>
-					</li>
-					<li>
-						<article class="comment row">
-							<div class="comment__avatar-container col-auto">
-								<span>Pseudo</span>
-								<img src="./assets/img/avatar-default.jpg" alt="Avatar">
-							</div>
-							<div class="comment__content col">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor
-																																																									                            auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum
-																																																									                            primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend,
-																																																									                            pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac
-																																																									                            elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
-							</div>
-						</article>
-					</li>
-					<li>
-						<article class="comment row">
-							<div class="comment__avatar-container col-auto">
-								<span>Pseudo</span>
-								<img src="./assets/img/avatar-default.jpg" alt="Avatar">
-							</div>
-							<div class="comment__content col">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor
-																																																									                            auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum
-																																																									                            primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend,
-																																																									                            pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac
-																																																									                            elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
-							</div>
-						</article>
-					</li>
-					<li>
-						<article class="comment row">
-							<div class="comment__avatar-container col-auto">
-								<span>Pseudo</span>
-								<img src="./assets/img/avatar-default.jpg" alt="Avatar">
-							</div>
-							<div class="comment__content col">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum, risus non tempor
-																																																									                            auctor, felis diam efficitur ante, rutrum eleifend dui quam id velit. Vestibulum ante ipsum
-																																																									                            primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris a orci eleifend,
-																																																									                            pulvinar enim vitae, lacinia sem. Vestibulum eu mi lorem. Nam quis gravida ante, ac
-																																																									                            elementum felis. Nulla placerat diam tellus, et convallis ipsum venenatis non.
-							</div>
-						</article>
-					</li>
-				</ul>
-				<div class="text-center">
-					<button class="cta mb-0">+ de commentaires</button>
-				</div>
+				{% include "tricks/messages-block.inc.html.twig" %}
 			</div>
 		</div>
 	</div>

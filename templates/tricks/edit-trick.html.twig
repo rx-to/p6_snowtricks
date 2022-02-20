@@ -1,7 +1,16 @@
 {% extends 'base.html.twig' %}
+
+{% if trick is defined %}
+	{% set title = "Édition : " ~ trick.title %}
+{% else %}
+	{% set title = "Créer une nouvelle figure" %}
+{% endif %}
+
 {% block slug %}template-figure
 {% endblock %}
-{% block title %}Édition : Nom de la figure
+
+{% block title %}
+	{{ title }}
 {% endblock %}
 
 {% block main %}
@@ -16,99 +25,100 @@
 						<i class="fad fa-trash"></i>
 					</a>
 				</div>
-				<h1 class="h1">Édition : Nom de la figure</h1>
+				<h1 class="h1">{{ title }}</h1>
 			</header>
 			<div class="section pb-0">
-				<div class="container container-custom">
-					<ul class="trick__info d-md-flex justify-content-between">
-						<li class="my-2 my-md-0">
-							<span class="fw-bold">Créé le :</span>
-							03/11/2021 à 10:00:00</li>
-						<li>
-							<span class="fw-bold">Modifié le :</span>
-							06/11/2021 à 15:21:00</>
-					</ul>
-					<hr>
-				</div>
-				<div class="container" id="trick__medias">
-					<div class="row">
-						<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-							<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
-							<div class="trick__actions mt-3">
-								<a href="#">
-									<i class="fad fa-edit"></i>
-								</a>
-								<a href="#">
-									<i class="fad fa-trash"></i>
-								</a>
+				{% if trick is defined %}
+					<div class="container container-custom">
+						<ul class="trick__info d-md-flex justify-content-between">
+							<li class="my-2 my-md-0">
+								<span class="fw-bold">Créé le :</span>
+								03/11/2021 à 10:00:00</li>
+							<li>
+								<span class="fw-bold">Modifié le :</span>
+								06/11/2021 à 15:21:00</>
+						</ul>
+						<hr>
+					</div>
+
+					<div class="container" id="trick__medias">
+						<div class="row">
+							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+								<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
+								<div class="trick__actions mt-3">
+									<a href="#">
+										<i class="fad fa-edit"></i>
+									</a>
+									<a href="#">
+										<i class="fad fa-trash"></i>
+									</a>
+								</div>
+							</div>
+							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+								<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
+								<div class="trick__actions mt-3">
+									<a href="#">
+										<i class="fad fa-edit"></i>
+									</a>
+									<a href="#">
+										<i class="fad fa-trash"></i>
+									</a>
+								</div>
+							</div>
+							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+								<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
+								<div class="trick__actions mt-3">
+									<a href="#">
+										<i class="fad fa-edit"></i>
+									</a>
+									<a href="#">
+										<i class="fad fa-trash"></i>
+									</a>
+								</div>
+							</div>
+							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
+								<div class="trick__actions mt-3">
+									<a href="#">
+										<i class="fad fa-edit"></i>
+									</a>
+									<a href="#">
+										<i class="fad fa-trash"></i>
+									</a>
+								</div>
+							</div>
+							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
+								<div class="trick__actions mt-3">
+									<a href="#">
+										<i class="fad fa-edit"></i>
+									</a>
+									<a href="#">
+										<i class="fad fa-trash"></i>
+									</a>
+								</div>
+							</div>
+							<div class="col-xl-2 col-lg-4 col-sm-6 text-center">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
+								<div class="trick__actions mt-3">
+									<a href="#">
+										<i class="fad fa-edit"></i>
+									</a>
+									<a href="#">
+										<i class="fad fa-trash"></i>
+									</a>
+								</div>
 							</div>
 						</div>
-						<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-							<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
-							<div class="trick__actions mt-3">
-								<a href="#">
-									<i class="fad fa-edit"></i>
-								</a>
-								<a href="#">
-									<i class="fad fa-trash"></i>
-								</a>
-							</div>
-						</div>
-						<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-							<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
-							<div class="trick__actions mt-3">
-								<a href="#">
-									<i class="fad fa-edit"></i>
-								</a>
-								<a href="#">
-									<i class="fad fa-trash"></i>
-								</a>
-							</div>
-						</div>
-						<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
-							<div class="trick__actions mt-3">
-								<a href="#">
-									<i class="fad fa-edit"></i>
-								</a>
-								<a href="#">
-									<i class="fad fa-trash"></i>
-								</a>
-							</div>
-						</div>
-						<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
-							<div class="trick__actions mt-3">
-								<a href="#">
-									<i class="fad fa-edit"></i>
-								</a>
-								<a href="#">
-									<i class="fad fa-trash"></i>
-								</a>
-							</div>
-						</div>
-						<div class="col-xl-2 col-lg-4 col-sm-6 text-center">
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
-							<div class="trick__actions mt-3">
-								<a href="#">
-									<i class="fad fa-edit"></i>
-								</a>
-								<a href="#">
-									<i class="fad fa-trash"></i>
-								</a>
-							</div>
+						<div class="text-center d-block d-lg-none">
+							<button class="cta mb-0 btn-hide-medias" data-target="#trick__medias" data-action="fadeOut">Cacher les médias</button>
 						</div>
 					</div>
-					<div class="text-center d-block d-lg-none">
-						<button class="cta mb-0 btn-hide-medias" data-target="#trick__medias" data-action="fadeOut">Cacher les médias</button>
-					</div>
 				</div>
-			</div>
-			<div class="text-center d-block d-lg-none">
-				<button class="cta mb-0 btn-see-medias mt-0" data-target="#trick__medias">Voir les médias</button>
-			</div>
-
-
+				<div class="text-center d-block d-lg-none">
+					<button class="cta mb-0 btn-see-medias mt-0" data-target="#trick__medias">Voir les médias</button>
+				</div>
+			{% endif %}
 			<div class="section pb-0">
 				<div class="container container-custom">
 					<form method="post" action="">
@@ -117,14 +127,13 @@
 						</div>
 
 						<div class="mb-5">
-							<textarea name="content" id="content" placeholder="Contenu"></textarea>
+							<textarea name="description" id="description" class="tinymce" placeholder="Contenu"></textarea>
 						</div>
 
 						<select name="category" id="category">
 							<option></option>
-							<option value="1">Catégorie n°1</option>
-							<option value="2">Catégorie n°2</option>
-							<option value="3">Catégorie n°3</option>
+							<option value="1">Groupe 1</option>
+							<option value="2">Groupe 2</option>
 						</select>
 
 						<div class="text-center">

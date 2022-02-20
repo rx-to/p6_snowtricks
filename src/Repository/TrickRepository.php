@@ -26,7 +26,7 @@ class TrickRepository extends ServiceEntityRepository
     public function countPages($limit): mixed
     {
         $conn       = $this->getEntityManager()->getConnection();
-        $sql        = "SELECT COUNT(*) `countTricks` FROM trick";
+        $sql        = "SELECT COUNT(*) `countTricks` FROM `trick`";
         $stmt       = $conn->prepare($sql);
         $result     = $stmt->executeQuery([]);
         $countPages = intval(($result->fetchAssociative()['countTricks'] - 1) / $limit) + 1;

@@ -5,7 +5,13 @@ namespace App\Controller;
 use Exception;
 use App\Controller;
 use App\Entity\Trick;
+use App\Entity\TrickCategory;
+use App\Entity\TrickMessage;
+use App\Entity\User;
+use App\Repository\TrickCategoryRepository;
+use App\Repository\TrickMessageRepository;
 use App\Repository\TrickRepository;
+use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,43 +21,53 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TrickController extends AbstractController
 {
-    #[Route('/figures/', name: 'app_tricks')]
-    public function tricks(ManagerRegistry $managerRegistry, int $limit= 15, int $curPage = 1): Response
+
+    private function getTricks(ManagerRegistry $managerRegistry, int $limit = 15, int $curPage = 1)
     {
         $offset     = $limit * ($curPage - 1);
         $repository = new TrickRepository($managerRegistry);
         $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $limit, $offset);
         $countPages = $repository->countPages($limit);
-        return $this->render('tricks/tricks.html.twig', ['tricks' => $tricks, 'countPages' => $countPages, 'curPage' => $curPage]);
+        return ['tricks' => $tricks, 'countPages' => $countPages, 'curPage' => $curPage];
+    }
+
+    #[Route('/', name: 'app_home')]
+    public function home(ManagerRegistry $managerRegistry, int $limit = 15, int $curPage = 1): Response
+    {
+        $params = $this->getTricks($managerRegistry, $limit, $curPage);
+        return $this->render('home.html.twig', $params);
+    }
+
+    #[Route('/figures/', name: 'app_tricks')]
+    public function tricks(ManagerRegistry $managerRegistry, int $limit = 15, int $curPage = 1): Response
+    {
+        $params = $this->getTricks($managerRegistry, $limit, $curPage);
+        return $this->render('tricks/tricks.html.twig', $params);
     }
 
     #[Route('/figures/voir-plus/', name: 'app_more_tricks', methods: 'POST')]
-    public function moreTricks(Request $request, ManagerRegistry $managerRegistry, int $limit= 15): Response
+    public function moreTricks(Request $request, ManagerRegistry $managerRegistry, int $limit = 15): Response
     {
         $curPage    = $request->get('curPage');
-        $offset     = $limit * ($curPage - 1);
-        $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $limit, $offset);
-        $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $tricks]);
-        $countPages = $repository->countPages($limit);
-        return $this->json(['list' => $render, 'countPages' => $countPages]);
+        $getTricks  = $this->getTricks($managerRegistry, $limit, $curPage);
+        $render     = $this->render('tricks/tricklist.inc.html.twig', ['tricks' => $getTricks['tricks']]);
+        return $this->json(['list' => $render, 'countPages' => $getTricks['countPages']]);
     }
 
     #[Route('/figures/rafraichir/', name: 'app_refresh_tricks', methods: 'POST')]
-    public function refreshTricks(Request $request, ManagerRegistry $managerRegistry, int $offset = 0, int $limit= 15): Response
+    public function refreshTricks(Request $request, ManagerRegistry $managerRegistry, int $curPage = 1, int $limit = 15): Response
     {
         $pageMax    = $request->get('pageMax');
-        $repository = new TrickRepository($managerRegistry);
-        $tricks     = $repository->findBy([], ['creation_date' => 'DESC'], $pageMax * $limit, $offset);
-        $countPages = $repository->countPages($limit);
-        $render     = $this->render('tricks/tricks-block.inc.html.twig', ['tricks' => $tricks, 'countPages' => $countPages, 'curPage' => $pageMax]);
-        return $this->json(['list' => $render, 'countPages' => $countPages, 'curPage' => $pageMax]);
+        $getTricks  = $this->getTricks($managerRegistry, $pageMax * $limit, $curPage);
+        $render     = $this->render('tricks/tricks-block.inc.html.twig', ['tricks' => $getTricks['tricks'], 'countPages' => $getTricks['countPages'], 'curPage' => $pageMax]);
+        return $this->json(['list' => $render, 'countPages' => $getTricks['countPages'], 'curPage' => $pageMax]);
     }
 
     #[Route('/figure/{slug<[0-9]+-[a-z0-9-]+>}/', name: 'app_single_trick')]
-    public function singleTrick(Trick $trick): Response
+    public function singleTrick(Trick $trick, Request $request, ManagerRegistry $managerRegistry): Response
     {
-        return $this->render('tricks/single-trick.html.twig', ['trick' => $trick]);
+        $messages = $this->getMessages($trick, $managerRegistry);
+        return $this->render('tricks/single-trick.html.twig', ['trick' => $trick, 'trickMessages' => $messages['list']]);
     }
 
     #[Route('/figure/supprimer/', name: 'app_delete_trick', methods: 'POST')]
@@ -70,7 +86,7 @@ class TrickController extends AbstractController
                 $feedback = "La figure <strong>" . $trick->getTitle() . "</strong> a bien été supprimée.";
             } catch (Exception $e) {
                 $success       = false;
-                $feedback      = "Une erreur est survenue lors de la suppresstion de la figure <strong>" . $trick->getTitle() . "</strong>.";
+                $feedback      = "Une erreur est survenue lors de la suppression de la figure <strong>" . $trick->getTitle() . "</strong>.";
             }
         }
 
@@ -78,8 +94,54 @@ class TrickController extends AbstractController
     }
 
     #[Route('/nouvelle-figure/', name: 'app_new_trick'), IsGranted("ROLE_USER")]
-    public function newTrick(Request $request): Response
+    public function newTrick(Request $request, ManagerRegistry $managerRegistry): Response
     {
+        $user = $this->getUser();
+        if ($request->isMethod('POST')) {
+            $entityManager = $managerRegistry->getManager();
+            $repository    = new TrickCategoryRepository($managerRegistry);
+            $trickCategory = $repository->find($request->get('category'));
+
+            $trick = new Trick();
+            $trick->setAuthor($user)
+                ->setCategory($trickCategory)
+                ->setTitle($request->get('title'))
+                ->setCreationDate(new DateTime())
+                ->setDescription($request->get('description'))
+                ->setIsDraft(0)
+                ->setSlug('test');
+            $entityManager->persist($trick);
+            try {
+                $entityManager->flush();
+                $success = true;
+                $feedback = "La figure <strong>" . $trick->getTitle() . "</strong> a bien été ajoutée.";
+            } catch (Exception $e) {
+                $success       = false;
+                $feedback      = "Une erreur est survenue lors de la création de la figure <strong>" . $trick->getTitle() . "</strong>.";
+                return new Response($e->getMessage());
+            }
+        }
         return $this->render('tricks/edit-trick.html.twig');
+    }
+
+    private function getMessages(Trick $trick, ManagerRegistry $managerRegistry, int $limit = 5, int $curPage = 1)
+    {
+        $repository = new TrickMessageRepository($managerRegistry);
+        $offset     = $limit * ($curPage - 1);
+        $messages   = $repository->findBy(['trick' => $trick->getId()], ['creation_date' => 'DESC'], $limit, $offset);
+        $countPages = $repository->countPages($trick->getId(), $limit);
+        return ['list' => $messages, 'countPages' => $countPages, 'curPage' => $curPage];
+    }
+
+    #[Route('/messages/voir-plus/', name: 'app_more_messages', methods: 'POST')]
+    public function moreMessages(Request $request, ManagerRegistry $managerRegistry, int $limit = 5): Response
+    {
+        $curPage     = $request->get('curPage');
+        $trickID     = $request->get('trickID');
+        $repository  = new TrickRepository($managerRegistry);
+        $trick       = $repository->find($trickID);
+        $getMessages = $this->getMessages($trick, $managerRegistry, $limit, $curPage);
+        $render      = $this->render('tricks/messagelist.inc.html.twig', ['trickMessages' => $getMessages['list']]);
+        return $this->json(['list' => $render, 'countPages' => $getMessages['countPages']]);
     }
 }

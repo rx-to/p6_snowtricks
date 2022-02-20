@@ -52,29 +52,37 @@ $("#category").select2({
 var curPage = 1;
 var lastPage;
 
-function buttonEvent(status) {
+function buttonEvent(button, status, container = null) {
+	let buttonSelector = $("#" + button.attr("id"));
+	let data = {};
 	if (status === "on") {
-		$(document).on("click", "#btn-see-more-tricks", function () {
-			moreItems("figures", $(".tricklist"), $(this));
+		$(buttonSelector).on("click", function (e) {
+			let itemsType = button.attr("data-items-type");
+			if (itemsType == "messages") data = { trickID: button.attr("data-trick-id") };
+			moreItems(itemsType, container, $(buttonSelector), data);
 		});
 	} else {
-		$(document).off("click", "#btn-see-more-tricks");
+		$(buttonSelector).off("click");
 	}
 }
 
-function moreItems(type, container, button) {
+function moreItems(type, container, button, extraData = {}) {
 	curPage++;
-	buttonEvent("off");
+	buttonEvent(button, "off");
+	let data = { curPage: curPage };
+	if (extraData) {
+		data = extraData;
+		data.curPage = curPage;
+	}
 	$.ajax({
 		method: "POST",
 		url: "/" + type + "/voir-plus/",
-		data: { curPage: curPage },
+		data: data,
 	}).done(function (result) {
 		pageMax = result.countPages;
 		container.append(result.list.content);
 		if (curPage == pageMax) button.remove();
-		console.log(curPage + " / " + pageMax);
-		buttonEvent("on");
+		else buttonEvent(button, "on", container);
 	});
 }
 
@@ -133,4 +141,7 @@ $(document).on("click", "button[data-action=delete-item]", function () {
 	deleteItem(type, id, container);
 });
 
-buttonEvent("on");
+var seeMoreTricksButton = $("#btn-see-more-tricks");
+var seeMoreMessagesButton = $("#btn-see-more-messages");
+if (seeMoreTricksButton.length) buttonEvent(seeMoreTricksButton, "on", $(".tricklist"));
+if (seeMoreMessagesButton.length) buttonEvent(seeMoreMessagesButton, "on", $(".comment-list"));

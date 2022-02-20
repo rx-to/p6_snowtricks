@@ -4,7 +4,7 @@
 
 	<div class="alert" style="display:none;"></div>
 
-	<a href="{{ path('app_new_trick') }}" class="cta{% if app.request.get('_route') != 'app_home' %} cta-white{% endif %}">
+	<a href="{{ path('app_new_trick') }}" class="cta cta-new-trick mt-0">
 		<i class="fa fa-plus me-3"></i>Nouvelle figure
 	</a>
 {% endif %}
@@ -17,6 +17,6 @@
 
 {% if curPage < countPages %}
 	<div class="text-center">
-		<button class="cta" id="btn-see-more-tricks">+ de figures</button>
+		<button class="cta" id="btn-see-more-tricks" data-items-type="figures">+ de figures</button>
 	</div>
 {% endif %}

@@ -1,0 +1,13 @@
+{% block messagelistItems %}
+	{% for message in trickMessages %}
+		<li>
+			<article class="comment row">
+				<div class="comment__avatar-container col-auto">
+					<span>{{ message.author.username }}</span>
+					<img src="{{ absolute_url(asset('img/avatar-default.jpg')) }}" alt="Avatar">
+				</div>
+				<div class="comment__content col">{{ message.content }}</div>
+			</article>
+		</li>
+	{% endfor %}
+{% endblock %}

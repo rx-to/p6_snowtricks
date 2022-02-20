@@ -1,0 +1,15 @@
+<p class="h2">{{ "num_of_comments"|trans({'count': trick.trickMessages|length}, 'general') }}</p>
+{% if(trick.trickMessages|length > 0) %}
+	{% block messagelist %}
+		<ul class="comment-list list-unstyled container container-custom px-0 px-lg-4">
+			{% include 'tricks/messagelist.inc.html.twig' %}
+		</ul>
+	{% endblock %}
+	{# {% if curPage < countPages %} #}
+		<div class="text-center">
+			<button class="cta mb-0" id="btn-see-more-messages" data-items-type="messages" data-trick-id="{{ trick.id }}">+ de commentaires</button>
+		</div>
+	{# {% endif %} #}
+{% else %}
+	<p class="text-center fst-italic">Aucun commentaire pour l'instant.</p>
+{% endif %}

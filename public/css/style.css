@@ -263,11 +263,13 @@ span.select2-selection.select2-selection--single {
 /* Popups */
 
 .modal-content {
-    border-radius: 15px;
+	border-radius: 15px;
 }
 
-.modal-header, .modal-footer, .modal-body {
-    padding: 1rem 1.25rem;
+.modal-header,
+.modal-footer,
+.modal-body {
+	padding: 1rem 1.25rem;
 }
 
 /* Links & Buttons */
@@ -303,7 +305,8 @@ button:not(.btn):hover,
 	border-color: var(--san-marino);
 }
 
-.cta-white {
+.cta-white,
+#figures .cta-new-trick {
 	background-color: transparent;
 	border-color: #fff;
 	color: #fff;
@@ -320,19 +323,19 @@ button {
 }
 
 .btn {
-    font-size: 1.4rem;
-    border-radius: 30px;
-    padding: .5rem 1.5rem;
+	font-size: 1.4rem;
+	border-radius: 30px;
+	padding: 0.5rem 1.5rem;
 }
 
 .btn.btn-danger:hover {
-    color: var(--bs-danger);
-    background: transparent;
+	color: var(--bs-danger);
+	background: transparent;
 }
 
 .btn.btn-secondary:hover {
-    color: var(--bs-secondary);
-    background: transparent;
+	color: var(--bs-secondary);
+	background: transparent;
 }
 
 /* Animations / Transitions */
@@ -353,6 +356,10 @@ nav .nav__toggler span:nth-child(2) {
 }
 
 /* Tricklist*/
+
+#figures .alert {
+	margin-bottom: 2.5rem;
+}
 
 .tricklist {
 	margin-top: -0.75rem;
@@ -469,9 +476,10 @@ nav .nav__toggler span:nth-child(2) {
 
 /* Comments */
 
-.comment-list {
+/* .comment-list {
 	margin: -1rem auto;
-}
+} */
+
 .comment {
 	margin: 2rem 0;
 }
@@ -657,6 +665,9 @@ body:not(#accueil) #scroll-arrow.scroll-down {
 	}
 	#accueil nav.scrollTop .nav__toggler span {
 		background-color: #fff;
+	}
+	body:not(#accueil) {
+		padding-top: 5rem;
 	}
 	nav .nav__toggler:hover span {
 		background: linear-gradient(to right, var(--san-marino), #5ea7ff);
