@@ -130,11 +130,24 @@
 							<textarea name="description" id="description" class="tinymce" placeholder="Contenu"></textarea>
 						</div>
 
-						<select name="category" id="category">
-							<option></option>
-							<option value="1">Groupe 1</option>
-							<option value="2">Groupe 2</option>
-						</select>
+						<div class="row">
+							<div class="col-md-9 mb-md-0 mb-4">
+								<select name="category" id="category">
+									<option></option>
+									{% for category in trickCategories %}
+										<option value="{{ category.id }}">{{ category.name }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="col offset-md-1 text-md-start text-center">
+								<div>
+									<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
+										<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1">
+										<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
+									</div>
+								</div>
+							</div>
+						</div>
 
 						<div class="text-center">
 							<button class="cta">Valider</button>

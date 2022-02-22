@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Repository\TrickCategoryRepository;
 use App\Repository\TrickMessageRepository;
 use App\Repository\TrickRepository;
+use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,6 +75,7 @@ class TrickController extends AbstractController
     public function deleteTrick(Request $request, ManagerRegistry $managerRegistry): Response
     {
         $id            = $request->get('id');
+        $redirect      = $request->get('redirect');
         $entityManager = $managerRegistry->getManager();
         $repository    = new TrickRepository($managerRegistry);
         $trick         = $repository->find($id);
@@ -82,12 +84,16 @@ class TrickController extends AbstractController
             $entityManager->remove($trick);
             try {
                 $entityManager->flush();
-                $success = true;
+                $success  = true;
                 $feedback = "La figure <strong>" . $trick->getTitle() . "</strong> a bien été supprimée.";
             } catch (Exception $e) {
-                $success       = false;
-                $feedback      = "Une erreur est survenue lors de la suppression de la figure <strong>" . $trick->getTitle() . "</strong>.";
+                $success  = false;
+                $feedback = "Une erreur est survenue lors de la suppression de la figure <strong>" . $trick->getTitle() . "</strong>.";
             }
+        }
+
+        if ($redirect) {
+            return $this->json(['redirect' => $this->generateUrl('app_tricks'), 'success' => $success, 'feedback' => $feedback]);
         }
 
         return $this->json(['success' => $success, 'feedback' => $feedback]);
@@ -96,32 +102,46 @@ class TrickController extends AbstractController
     #[Route('/nouvelle-figure/', name: 'app_new_trick'), IsGranted("ROLE_USER")]
     public function newTrick(Request $request, ManagerRegistry $managerRegistry): Response
     {
-        $user = $this->getUser();
-        if ($request->isMethod('POST')) {
-            $entityManager = $managerRegistry->getManager();
-            $repository    = new TrickCategoryRepository($managerRegistry);
-            $trickCategory = $repository->find($request->get('category'));
+        $user = $this->getUser(); // Trick author.
 
+        // Trick categories (select menu).
+        $trickCategoryRepository = new TrickCategoryRepository($managerRegistry);
+        $trickCategories         = $trickCategoryRepository->findAll();
+
+        if ($request->isMethod('POST')) {
+            $trickCategory   = $trickCategoryRepository->find($request->get('category')); // Trick category.
+
+            // Trick slug.
+            $trickRepository = new TrickRepository($managerRegistry);
+            $newID           = $trickRepository->maxID() + 1;
+            $slugify         = new Slugify();
+            $slug            = $slugify->slugify("$newID-" . $request->get('title'));
+
+            // Trick creation.
             $trick = new Trick();
-            $trick->setAuthor($user)
+            $trick
+                ->setAuthor($user)
                 ->setCategory($trickCategory)
                 ->setTitle($request->get('title'))
-                ->setCreationDate(new DateTime())
                 ->setDescription($request->get('description'))
-                ->setIsDraft(0)
-                ->setSlug('test');
+                ->setCreationDate(new DateTime())
+                ->setIsDraft($request->get('is_draft') ? 1 : 0)
+                ->setSlug($slug);
+
+            $entityManager = $managerRegistry->getManager();
             $entityManager->persist($trick);
+
             try {
+                // Everything went well => redirect to tricks page with success alert.
                 $entityManager->flush();
-                $success = true;
-                $feedback = "La figure <strong>" . $trick->getTitle() . "</strong> a bien été ajoutée.";
+                $this->addFlash('warning', "La figure <strong>" . $trick->getTitle() . "</strong> a bien été ajoutée.");
+                return $this->redirectToRoute('app_tricks');
             } catch (Exception $e) {
-                $success       = false;
-                $feedback      = "Une erreur est survenue lors de la création de la figure <strong>" . $trick->getTitle() . "</strong>.";
-                return new Response($e->getMessage());
+                // Displays error on same page.
+                return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors de la création de la figure <strong>" . $trick->getTitle() . "</strong>."]);
             }
         }
-        return $this->render('tricks/edit-trick.html.twig');
+        return $this->render('tricks/edit-trick.html.twig', ['trickCategories' => $trickCategories]);
     }
 
     private function getMessages(Trick $trick, ManagerRegistry $managerRegistry, int $limit = 5, int $curPage = 1)

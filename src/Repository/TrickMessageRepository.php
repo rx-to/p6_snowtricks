@@ -19,12 +19,7 @@ class TrickMessageRepository extends ServiceEntityRepository
         parent::__construct($registry, TrickMessage::class);
     }
 
-    /**
-     * @param int $trickID
-     * @param int $limit
-     * @return int
-     */
-    public function countPages(int $trickID, int $limit): mixed
+    public function countPages(int $trickID, int $limit): int
     {
         $conn       = $this->getEntityManager()->getConnection();
         $sql        = "SELECT COUNT(*) `countMessages` FROM `trick_message` WHERE `trick_id` = :trick_id";

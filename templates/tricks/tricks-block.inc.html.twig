@@ -2,8 +2,18 @@
 
 	{% include "tricks/delete-trick-popup.inc.html.twig" %}
 
-	<div class="alert" style="display:none;"></div>
-
+	{% if app.flashes|length %}
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+	{% else %}
+		<div class="alert" style="display:none;"></div>
+	{% endif %}
+	
 	<a href="{{ path('app_new_trick') }}" class="cta cta-new-trick mt-0">
 		<i class="fa fa-plus me-3"></i>Nouvelle figure
 	</a>

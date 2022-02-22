@@ -32,7 +32,7 @@ class Trick
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $creation_date;
 
@@ -66,7 +66,7 @@ class Trick
     private $trickVideos;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": 0})
      */
     private $is_draft;
 
@@ -77,7 +77,6 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=TrickMessage::class, mappedBy="trick", orphanRemoval=true)
-     * @MaxDepth(2) 
      */
     private $trickMessages;
 

@@ -19,11 +19,7 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
-    /**
-     * @param int $limit
-     * @return int
-     */
-    public function countPages($limit): mixed
+    public function countPages(int $limit): int
     {
         $conn       = $this->getEntityManager()->getConnection();
         $sql        = "SELECT COUNT(*) `countTricks` FROM `trick`";
@@ -33,7 +29,17 @@ class TrickRepository extends ServiceEntityRepository
         
         return $countPages;
     }
-
+    
+    public function maxID(): int
+    {
+        $conn       = $this->getEntityManager()->getConnection();
+        $sql        = "SELECT MAX(`id`) `maxID` FROM `trick`";
+        $stmt       = $conn->prepare($sql);
+        $result     = $stmt->executeQuery([]);
+        $maxID = intval($result->fetchAssociative()['maxID']);
+        
+        return $maxID;
+    }
 
     // /**
     //  * @return Trick[] Returns an array of Trick objects

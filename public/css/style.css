@@ -216,7 +216,7 @@ input + label {
 	margin-bottom: 0;
 }
 
-.form-switch input#_remember_me {
+.form-switch .form-check-input {
 	height: 2.4rem;
 	width: 4rem;
 }
@@ -312,7 +312,8 @@ button:not(.btn):hover,
 	color: #fff;
 }
 
-.cta-white:hover {
+.cta-white:hover,
+#figures .cta-new-trick:hover {
 	background-color: #fff;
 	color: var(--san-marino);
 	border-color: #fff;
@@ -357,7 +358,8 @@ nav .nav__toggler span:nth-child(2) {
 
 /* Tricklist*/
 
-#figures .alert {
+#figures .alert,
+#accueil .alert {
 	margin-bottom: 2.5rem;
 }
 
@@ -462,6 +464,12 @@ nav .nav__toggler span:nth-child(2) {
 .trick__actions a {
 	color: #fff;
 	margin: 0 1rem;
+}
+
+.trick__header .trick__actions a,
+.trick__header .trick__actions button {
+	background-color: transparent;
+	color: #fff;
 }
 
 .trick__medias-wrapper {

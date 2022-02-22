@@ -86,13 +86,27 @@ function moreItems(type, container, button, extraData = {}) {
 	});
 }
 
-function deleteItem(type, id, container) {
+function deleteItem(type, id, container, extraData = {}) {
+	let data = { id: id };
+	if (extraData) {
+		data = extraData;
+		data.id = id;
+	}
 	$.ajax({
 		method: "POST",
 		url: "/" + type + "/supprimer/",
-		data: { id: id },
+		data: data,
 	}).done(function (result) {
-		if (result.success) refreshItems(type, curPage, container, result);
+		if ($("#template-figure").length) {
+			displayAlert(result);
+		} else if (result.success) {
+			refreshItems(type, curPage, container, result);
+		}
+
+		if (result.redirect)
+			setTimeout(function () {
+				document.location = result.redirect;
+			}, 3000);
 	});
 }
 
@@ -106,15 +120,19 @@ function refreshItems(type, pageMax, container, feedback) {
 		pageMax = result.countPages;
 		container.html(result.list.content);
 		if (feedback) {
-			$(".alert")
-				.toggleClass("alert-" + (feedback.success ? "success" : "danger"))
-				.html(feedback.feedback)
-				.fadeIn();
-			setTimeout(function () {
-				$(".alert").fadeOut();
-			}, 3000);
+			displayAlert(feedback);
 		}
 	});
+}
+
+function displayAlert(result) {
+	$(".alert")
+		.toggleClass("alert-" + (result.success ? "success" : "danger"))
+		.html(result.feedback)
+		.fadeIn();
+	setTimeout(function () {
+		$(".alert").fadeOut();
+	}, 3000);
 }
 
 function fillModal(title) {
@@ -125,10 +143,13 @@ var modal = $("#delete-item-modal");
 
 $(document).on("click", "button[data-action=call-popup-delete-item]", function () {
 	let itemToDelete = $(this).closest("[data-item-type]");
-	let itemTitle = $(this).closest("[data-item-type]").find("figcaption a").html();
+	let itemTitle = itemToDelete.attr("data-item-title");
+	let redirect = itemToDelete.attr("data-item-redirect");
 
 	modal.attr("data-item-type", itemToDelete.attr("data-item-type"));
 	modal.attr("data-item-id", itemToDelete.attr("data-item-id"));
+
+	if (redirect) modal.attr("data-item-redirect", itemToDelete.attr("data-item-id"));
 
 	fillModal(itemTitle);
 });
@@ -137,8 +158,9 @@ $(document).on("click", "button[data-action=delete-item]", function () {
 	let type = modal.attr("data-item-type");
 	let id = modal.attr("data-item-id");
 	let container = $(".tricks-block");
-
-	deleteItem(type, id, container);
+	let extraData = {};
+	if (modal.attr("data-item-redirect")) extraData = { redirect: 1 };
+	deleteItem(type, id, container, extraData);
 });
 
 var seeMoreTricksButton = $("#btn-see-more-tricks");
