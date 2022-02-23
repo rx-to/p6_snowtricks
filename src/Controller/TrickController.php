@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class TrickController extends AbstractController
 {
@@ -116,6 +117,10 @@ class TrickController extends AbstractController
             $newID           = $trickRepository->maxID() + 1;
             $slugify         = new Slugify();
             $slug            = $slugify->slugify("$newID-" . $request->get('title'));
+
+            // Trick image.
+            $image = $request->files->get('image');
+            
 
             // Trick creation.
             $trick = new Trick();

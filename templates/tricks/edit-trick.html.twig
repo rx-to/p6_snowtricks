@@ -121,7 +121,10 @@
 			{% endif %}
 			<div class="section pb-0">
 				<div class="container container-custom">
-					<form method="post" action="">
+					<form method="post" action="" enctype="multipart/form-data">
+						<label class="upload-image-btn">
+							<input type="file" name="image[]" class="d-none">
+						</label>
 						<div class="mb-5">
 							<input type="text" name="title" id="title" class="input-custom" placeholder="Titre">
 						</div>

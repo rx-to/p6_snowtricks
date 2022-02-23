@@ -174,6 +174,37 @@ body:not(#accueil) #nav-main {
 
 /* Forms */
 
+.upload-image-btn {
+    position: relative;
+    width: 25%;
+    height: 110px;
+    border: solid 2px grey;
+    background: #f1f1f1;
+    border-style: dashed;
+    border-radius: 15px;
+    margin-bottom: 4rem;
+    cursor: pointer;
+}
+
+.upload-image-btn::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: "+";
+    font-size: 5rem;
+    color: grey;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+.upload-image-btn:hover {
+    opacity: .75;
+}
+
 .form-custom {
 	background-color: #ffffffe6;
 	max-width: 500px;
@@ -343,7 +374,8 @@ button {
 
 a,
 button,
-.tricklist__item figcaption {
+.tricklist__item figcaption,
+.upload-image-btn {
 	transition: all 0.3s ease-in-out;
 }
 
