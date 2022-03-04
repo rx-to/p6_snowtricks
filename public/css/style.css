@@ -13,11 +13,13 @@
 
 :root {
 	font-size: 62.5%;
-	--san-marino: #3f72af;
+	--steel-blue: #418baf;
+	cursor: url(/cursor/cursor-default.png), auto;
+	--cursor-pointer: url(/cursor/cursor-pointer.png), auto;
 }
 
 ::selection {
-	background: var(--san-marino);
+	background: var(--steel-blue);
 	color: #ffffff;
 }
 
@@ -113,7 +115,11 @@ footer {
 	font-family: "Chelsea Market", cursive;
 	text-align: center;
 	margin-bottom: 4rem;
-	color: var(--san-marino);
+	color: var(--steel-blue);
+}
+
+.h1.text-white {
+	text-shadow: 0 0 10px #2c5f78;
 }
 
 .h2 {
@@ -175,34 +181,41 @@ body:not(#accueil) #nav-main {
 /* Forms */
 
 .upload-image-btn {
-    position: relative;
-    width: 25%;
-    height: 110px;
-    border: solid 2px grey;
-    background: #f1f1f1;
-    border-style: dashed;
-    border-radius: 15px;
-    margin-bottom: 4rem;
-    cursor: pointer;
+	position: relative;
+	display: block;
+	height: 110px;
+	border: solid 2px grey;
+	background: #f1f1f1;
+	border-style: dashed;
+	border-radius: 15px;
+	margin-bottom: 1.5rem;
+	cursor: var(--cursor-pointer);
 }
 
 .upload-image-btn::after {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    content: "+";
-    font-size: 5rem;
-    color: grey;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	content: "+";
+	font-size: 5rem;
+	color: grey;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	text-align: center;
 }
 
+.upload-image-btn.has-img::after {
+	content: "";
+}
+.upload-image-btn.has-img:hover:after {
+	content: "+";
+	color: #000000;
+}
 .upload-image-btn:hover {
-    opacity: .75;
+	opacity: 0.75;
 }
 
 .form-custom {
@@ -216,11 +229,11 @@ body:not(#accueil) #nav-main {
 	max-width: 270px;
 }
 
-.input-custom {
+.input-custom, .select2.select2-container.select2-container--default {
 	width: 100%;
 	display: block;
 	border: 0;
-	border-bottom: solid 2px var(--san-marino);
+	border-bottom: solid 2px var(--steel-blue);
 	background: transparent;
 	padding: 0.5rem 1rem;
 	margin: 0 auto;
@@ -231,7 +244,7 @@ body:not(#accueil) #nav-main {
 .label-custom {
 	display: block;
 	font-weight: 700;
-	color: var(--san-marino);
+	color: var(--steel-blue);
 }
 
 input + label {
@@ -263,18 +276,17 @@ input + label {
 }
 
 .form-check-input:checked {
-	background-color: var(--san-marino);
-	border-color: var(--san-marino);
+	background-color: var(--steel-blue);
+	border-color: var(--steel-blue);
 }
 
-span#select2-category-container {
+.select2-selection__rendered {
 	line-height: 36px;
 }
 
 span.select2-selection.select2-selection--single {
-	height: 36px;
 	border: 0;
-	border-bottom: solid 2px var(--san-marino);
+	border-bottom:0;
 	border-radius: 0;
 }
 
@@ -283,12 +295,16 @@ span.select2-selection.select2-selection--single {
 }
 
 .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
-	background-color: var(--san-marino) !important;
+	background-color: var(--steel-blue) !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
 	color: #757575 !important;
 	font-family: "PT Sans", sans-serif;
+}
+
+span.select2-selection.select2-selection--multiple {
+    border: 0 !important;
 }
 
 /* Popups */
@@ -314,7 +330,8 @@ a:hover,
 .cta:hover,
 button:not(.btn):hover,
 #scroll-arrow:hover {
-	color: var(--san-marino) !important;
+	color: var(--steel-blue) !important;
+	cursor: var(--cursor-pointer);
 }
 
 .cta {
@@ -323,9 +340,9 @@ button:not(.btn):hover,
 	padding: 2rem 5rem;
 	border-radius: 5rem;
 	outline: 0;
-	background-color: var(--san-marino);
+	background-color: var(--steel-blue);
 	color: #fff;
-	border: solid 2px var(--san-marino);
+	border: solid 2px var(--steel-blue);
 	text-transform: uppercase;
 	font-weight: 700;
 	margin: 4rem 0 3.5rem;
@@ -333,7 +350,7 @@ button:not(.btn):hover,
 
 .cta:hover {
 	background-color: transparent;
-	border-color: var(--san-marino);
+	border-color: var(--steel-blue);
 }
 
 .cta-white,
@@ -346,7 +363,7 @@ button:not(.btn):hover,
 .cta-white:hover,
 #figures .cta-new-trick:hover {
 	background-color: #fff;
-	color: var(--san-marino);
+	color: var(--steel-blue);
 	border-color: #fff;
 }
 
@@ -561,7 +578,7 @@ nav .nav__toggler span:nth-child(2) {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background: linear-gradient(140deg, var(--san-marino), transparent);
+	background: linear-gradient(140deg, var(--steel-blue), transparent);
 }
 #header-home img {
 	max-width: 20rem;
@@ -598,10 +615,10 @@ nav .nav__toggler span:nth-child(2) {
 	display: inline-block;
 	color: #fff;
 	font-size: 2.2rem;
-	background-color: var(--san-marino);
+	background-color: var(--steel-blue);
 	width: 3.4rem;
 	height: 3.4rem;
-	border: solid 1px var(--san-marino);
+	border: solid 1px var(--steel-blue);
 	border-radius: 50%;
 	text-align: center;
 }
@@ -642,7 +659,7 @@ nav .nav__toggler span:nth-child(2) {
 	right: 5%;
 	border-radius: 50%;
 	border: solid 2px transparent;
-	background-color: var(--san-marino);
+	background-color: var(--steel-blue);
 	color: #fff;
 	font-size: 2rem;
 	z-index: 250;
@@ -651,8 +668,8 @@ nav .nav__toggler span:nth-child(2) {
 
 #scroll-arrow:hover {
 	background-color: #ffffff;
-	color: var(--san-marino);
-	border-color: var(--san-marino);
+	color: var(--steel-blue);
+	border-color: var(--steel-blue);
 }
 
 #scroll-arrow.scroll-up {
@@ -710,7 +727,7 @@ body:not(#accueil) #scroll-arrow.scroll-down {
 		padding-top: 5rem;
 	}
 	nav .nav__toggler:hover span {
-		background: linear-gradient(to right, var(--san-marino), #5ea7ff);
+		background: linear-gradient(to right, var(--steel-blue), #5ea7ff);
 	}
 	nav.open .nav__toggler span {
 		position: absolute;

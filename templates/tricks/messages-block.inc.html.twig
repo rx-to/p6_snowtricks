@@ -5,11 +5,11 @@
 			{% include 'tricks/messagelist.inc.html.twig' %}
 		</ul>
 	{% endblock %}
-	{# {% if curPage < countPages %} #}
+	{% if curPage < countPages %}
 		<div class="text-center">
 			<button class="cta mb-0" id="btn-see-more-messages" data-items-type="messages" data-trick-id="{{ trick.id }}">+ de commentaires</button>
 		</div>
-	{# {% endif %} #}
+	{% endif %}
 {% else %}
 	<p class="text-center fst-italic">Aucun commentaire pour l'instant.</p>
 {% endif %}

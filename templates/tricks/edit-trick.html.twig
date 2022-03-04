@@ -16,17 +16,20 @@
 {% block main %}
 	<div class="bg-white position-relative trick-template">
 		<article>
-			<header class="trick__header">
-				<div class="trick__actions">
-					<a href="tpl-creation-edition-figure.php">
-						<i class="fad fa-edit"></i>
-					</a>
-					<a href="#">
-						<i class="fad fa-trash"></i>
-					</a>
-				</div>
-				<h1 class="h1">{{ title }}</h1>
-			</header>
+			{% if trick is defined %}
+				<header class="trick__header">
+					<div class="trick__actions">
+						<a href="tpl-creation-edition-figure.php">
+							<i class="fad fa-edit"></i>
+						</a>
+						<a href="#">
+							<i class="fad fa-trash"></i>
+						</a>
+					</div>
+					<h1 class="h1">Édition :
+						{{ trick.title }}</h1>
+				</header>
+			{% endif %}
 			<div class="section pb-0">
 				{% if trick is defined %}
 					<div class="container container-custom">
@@ -119,44 +122,54 @@
 					<button class="cta mb-0 btn-see-medias mt-0" data-target="#trick__medias">Voir les médias</button>
 				</div>
 			{% endif %}
-			<div class="section pb-0">
-				<div class="container container-custom">
-					<form method="post" action="" enctype="multipart/form-data">
-						<label class="upload-image-btn">
-							<input type="file" name="image[]" class="d-none">
-						</label>
-						<div class="mb-5">
-							<input type="text" name="title" id="title" class="input-custom" placeholder="Titre">
+			<div class="container container-custom">
+				{% if trick is not defined %}
+					<h1 class="h1">Nouvelle figure</h1>
+				{% endif %}
+				<form method="post" action="" enctype="multipart/form-data">
+					<div class="row files-upload-container mb-4">
+						<div class="col-sm-3 col-6">
+							<label class="upload-image-btn">
+								<input type="file" name="image[]" class="d-none">
+							</label>
 						</div>
+					</div>
 
-						<div class="mb-5">
-							<textarea name="description" id="description" class="tinymce" placeholder="Contenu"></textarea>
+					<div class="mb-5">
+						<select class="select2 select2-tags form-control" name="embed_code[]" multiple></select>
+					</div>
+
+					<div class="mb-5">
+						<input type="text" name="title" id="title" class="input-custom" placeholder="Titre">
+					</div>
+
+					<div class="mb-5">
+						<textarea name="description" id="description" class="tinymce" placeholder="Contenu"></textarea>
+					</div>
+
+					<div class="row">
+						<div class="col-md-9 mb-md-0 mb-4">
+							<select name="category" id="category" class="select2">
+								<option></option>
+								{% for category in trickCategories %}
+									<option value="{{ category.id }}">{{ category.name }}</option>
+								{% endfor %}
+							</select>
 						</div>
-
-						<div class="row">
-							<div class="col-md-9 mb-md-0 mb-4">
-								<select name="category" id="category">
-									<option></option>
-									{% for category in trickCategories %}
-										<option value="{{ category.id }}">{{ category.name }}</option>
-									{% endfor %}
-								</select>
-							</div>
-							<div class="col offset-md-1 text-md-start text-center">
-								<div>
-									<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
-										<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1">
-										<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
-									</div>
+						<div class="col offset-md-1 text-md-start text-center">
+							<div>
+								<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
+									<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1">
+									<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
 								</div>
 							</div>
 						</div>
+					</div>
 
-						<div class="text-center">
-							<button class="cta">Valider</button>
-						</div>
-					</form>
-				</div>
+					<div class="text-center">
+						<button class="cta mb-0">Valider</button>
+					</div>
+				</form>
 			</div>
 		</article>
 	</div>

@@ -167,3 +167,22 @@ var seeMoreTricksButton = $("#btn-see-more-tricks");
 var seeMoreMessagesButton = $("#btn-see-more-messages");
 if (seeMoreTricksButton.length) buttonEvent(seeMoreTricksButton, "on", $(".tricklist"));
 if (seeMoreMessagesButton.length) buttonEvent(seeMoreMessagesButton, "on", $(".comment-list"));
+
+$(document).on("change", ".upload-image-btn input", function (e) {
+	showPreview(e, $(this).closest(".upload-image-btn"));
+
+	if ($(".upload-image-btn:not(.has-img)").length == 0) $(".files-upload-container").append('<div class="col-sm-3 col-6"><label class="upload-image-btn"><input type="file" name="image[]" class="d-none"></label></div>');
+});
+
+function showPreview(e, target) {
+	if (e.target.files.length > 0) {
+		var src = URL.createObjectURL(e.target.files[0]);
+		if (!target.hasClass("has-img")) target.addClass("has-img");
+		target.css("background", "url(" + src + ") no-repeat center / cover");
+	}
+}
+
+$(".select2-tags").select2({
+	tags: true,
+	placeholder: "Collez vos embed codes ici !"
+  });

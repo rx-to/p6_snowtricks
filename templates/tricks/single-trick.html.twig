@@ -7,7 +7,7 @@
 {% set headerImage = null %}
 {% for image in trick.trickImages %}
 	{% if image.isThumbnail %}
-		{% set headerImage = absolute_url(asset("upload/tricks/1920/#{image.filename}")) %}
+		{% set headerImage = absolute_url(asset("upload/tricks/#{image.filename}")) %}
 	{% endif %}
 {% endfor %}
 
@@ -35,7 +35,7 @@
 							{% for image in trick.trickImages %}
 								{% if not image.isThumbnail %}
 									<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0 py-3">
-										<img src="{{ absolute_url(asset("upload/tricks/536/#{image.filename}")) }}" alt="{{ trick.title }} &mdash; Image n°1" class="img-fluid">
+										<img src="{{ absolute_url(asset("upload/tricks/#{image.filename}")) }}" alt="{{ trick.title }} &mdash; Image n°1" class="img-fluid">
 									</div>
 								{% endif %}
 							{% endfor %}
@@ -86,7 +86,8 @@
 		<div class="section pt-0">
 			<div class="container">
 				<hr>
-				<form method="post" action="" class="container container-custom px-0 px-lg-4">
+				<form method="post" action="{{ path('app_post_comment') }}" class="container container-custom px-0 px-lg-4">
+					<input type="hidden" name="trick_id" value="{{ trick.id }}">
 					<textarea name="comment" id="comment" rows="5" placeholder="Votre commentaire..." class="input-custom"></textarea>
 					<div class="text-center">
 						<button class="cta mb-0">Envoyer</button>

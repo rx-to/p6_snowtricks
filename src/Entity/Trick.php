@@ -54,13 +54,13 @@ class Trick
     private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrickImage::class, mappedBy="trick", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=TrickImage::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
      * @MaxDepth(2) 
      */
     private $trickImages;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrickVideo::class, mappedBy="trick", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=TrickVideo::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
      * @MaxDepth(2) 
      */
     private $trickVideos;

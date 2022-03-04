@@ -2,24 +2,27 @@
 
 namespace App\Controller;
 
+use DateTime;
 use Exception;
 use App\Controller;
-use App\Entity\Trick;
-use App\Entity\TrickCategory;
-use App\Entity\TrickMessage;
 use App\Entity\User;
-use App\Repository\TrickCategoryRepository;
-use App\Repository\TrickMessageRepository;
-use App\Repository\TrickRepository;
+use App\Entity\Trick;
+use App\Entity\TrickImage;
+use App\Entity\TrickVideo;
 use Cocur\Slugify\Slugify;
-use DateTime;
+use App\Entity\TrickMessage;
+use App\Entity\TrickCategory;
+use App\Repository\TrickRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\TrickMessageRepository;
+use App\Repository\TrickCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class TrickController extends AbstractController
 {
@@ -69,7 +72,7 @@ class TrickController extends AbstractController
     public function singleTrick(Trick $trick, Request $request, ManagerRegistry $managerRegistry): Response
     {
         $messages = $this->getMessages($trick, $managerRegistry);
-        return $this->render('tricks/single-trick.html.twig', ['trick' => $trick, 'trickMessages' => $messages['list']]);
+        return $this->render('tricks/single-trick.html.twig', ['trick' => $trick, 'trickMessages' => $messages['list'], 'curPage' => 1, 'countPages' => $messages['countPages']]);
     }
 
     #[Route('/figure/supprimer/', name: 'app_delete_trick', methods: 'POST')]
@@ -109,6 +112,9 @@ class TrickController extends AbstractController
         $trickCategoryRepository = new TrickCategoryRepository($managerRegistry);
         $trickCategories         = $trickCategoryRepository->findAll();
 
+        // Trick creation.
+        $trick = new Trick();
+
         if ($request->isMethod('POST')) {
             $trickCategory   = $trickCategoryRepository->find($request->get('category')); // Trick category.
 
@@ -118,12 +124,42 @@ class TrickController extends AbstractController
             $slugify         = new Slugify();
             $slug            = $slugify->slugify("$newID-" . $request->get('title'));
 
-            // Trick image.
-            $image = $request->files->get('image');
-            
+            // Trick images.
+            if ($trickImages = $request->files->get('image')) {
+                foreach ($trickImages as $key => $trickImage) {
 
-            // Trick creation.
-            $trick = new Trick();
+                    $originalFilename = pathinfo($trickImage->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename     = $slugify->slugify($originalFilename);
+                    $newFilename      = $safeFilename . '-' . uniqid() . '.' . $trickImage->guessExtension();
+
+                    try {
+                        $trickImage->move(
+                            $this->getParameter('app_tricks_images_dir'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors du téléversement d'une image."]);
+                    }
+
+                    $isThumbnail = $key == 0 ? true : false;
+
+                    $trickImage = new TrickImage();
+                    $trickImage
+                        ->setFilename($newFilename)
+                        ->setIsThumbnail($isThumbnail);
+                    $trick->addTrickImage($trickImage);
+                }
+            }
+
+            // Trick videos.
+            if ($embedCodeList = $request->get('embed_code')) {
+                foreach ($embedCodeList as $embedCode) {
+                    $trickVideo = new TrickVideo();
+                    $trickVideo->setEmbedCode($embedCode);
+                    $trick->addTrickVideo($trickVideo);
+                }
+            }
+
             $trick
                 ->setAuthor($user)
                 ->setCategory($trickCategory)
@@ -139,14 +175,49 @@ class TrickController extends AbstractController
             try {
                 // Everything went well => redirect to tricks page with success alert.
                 $entityManager->flush();
-                $this->addFlash('warning', "La figure <strong>" . $trick->getTitle() . "</strong> a bien été ajoutée.");
+                $this->addFlash('success', "La figure <strong>" . $trick->getTitle() . "</strong> a bien été ajoutée.");
                 return $this->redirectToRoute('app_tricks');
             } catch (Exception $e) {
                 // Displays error on same page.
+                echo $e->getMessage();
                 return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors de la création de la figure <strong>" . $trick->getTitle() . "</strong>."]);
             }
         }
         return $this->render('tricks/edit-trick.html.twig', ['trickCategories' => $trickCategories]);
+    }
+
+    #[Route('/poster-un-commentaire/', name: 'app_post_comment', methods: 'POST'), IsGranted("ROLE_USER")]
+    public function postMessage(Request $request, ManagerRegistry $managerRegistry): Response
+    {
+        $user = $this->getUser(); // Message author.
+
+        $trickID         = $request->get('trick_id');
+        $trickRepository = new TrickRepository($managerRegistry);
+        $trick           = $trickRepository->find($trickID);
+
+        $message = $request->get('comment'); // Message content.
+
+        // Message creation.
+        $trickMessage = new TrickMessage();
+        $trickMessage
+            ->setAuthor($user)
+            ->setCreationDate(new DateTime())
+            ->setTrick($trick)
+            ->setContent($message);
+
+            $entityManager = $managerRegistry->getManager();
+            $entityManager->persist($trickMessage);
+
+            try {
+                // Everything went well => redirect to tricks page with success alert.
+                $entityManager->flush();
+                return $this->redirectToRoute('app_single_trick', ['slug' => $trick->getSlug()]);
+            } catch (Exception $e) {
+                // Displays error on same page.
+                echo $e->getMessage();
+                return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors de l'ajout du commentaire</strong>."]);
+            }
+        
     }
 
     private function getMessages(Trick $trick, ManagerRegistry $managerRegistry, int $limit = 5, int $curPage = 1)
