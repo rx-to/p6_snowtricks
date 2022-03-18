@@ -178,6 +178,10 @@ body:not(#accueil) #nav-main {
 	padding: 2rem 0.75rem;
 }
 
+#nav-main li.active a {
+	color: var(--steel-blue);
+}
+
 /* Forms */
 
 .upload-image-btn {
@@ -218,6 +222,52 @@ body:not(#accueil) #nav-main {
 	opacity: 0.75;
 }
 
+.upload-image-btn-wrapper {
+	position: relative;
+}
+
+.upload-image-btn-wrapper .thumbnail-btn,
+.upload-image-btn-wrapper .delete-btn {
+	position: absolute;
+	top: 0;
+	font-size: 3rem;
+	margin: 0.5rem 1rem;
+	z-index: 100;
+}
+
+.upload-image-btn-wrapper .thumbnail-btn {
+	left: 0;
+	color: grey;
+}
+
+.upload-image-btn-wrapper .delete-btn {
+	right: 0;
+	color: var(--bs-danger);
+	cursor: pointer;
+}
+
+.upload-image-btn-wrapper.has-img.is-thumbnail .delete-btn,
+.upload-image-btn-wrapper:not(.has-img) .delete-btn,
+.upload-image-btn-wrapper:not(.has-img) .thumbnail-btn {
+	display: none;
+}
+
+.upload-image-btn-wrapper .thumbnail-btn {
+	color: grey;
+}
+
+.upload-image-btn-wrapper.is-thumbnail .upload-image-btn {
+	border-color: var(--steel-blue);
+	box-shadow: var(--steel-blue) 0 0 10px;
+	border-radius: 15px;
+}
+
+.upload-image-btn-wrapper .thumbnail-btn:hover,
+.upload-image-btn-wrapper.is-thumbnail .thumbnail-btn {
+	color: var(--steel-blue);
+	cursor: pointer;
+}
+
 .form-custom {
 	background-color: #ffffffe6;
 	max-width: 500px;
@@ -229,7 +279,8 @@ body:not(#accueil) #nav-main {
 	max-width: 270px;
 }
 
-.input-custom, .select2.select2-container.select2-container--default {
+.input-custom,
+.select2.select2-container.select2-container--default {
 	width: 100%;
 	display: block;
 	border: 0;
@@ -286,7 +337,7 @@ input + label {
 
 span.select2-selection.select2-selection--single {
 	border: 0;
-	border-bottom:0;
+	border-bottom: 0;
 	border-radius: 0;
 }
 
@@ -304,7 +355,7 @@ span.select2-selection.select2-selection--single {
 }
 
 span.select2-selection.select2-selection--multiple {
-    border: 0 !important;
+	border: 0 !important;
 }
 
 /* Popups */
@@ -444,6 +495,10 @@ nav .nav__toggler span:nth-child(2) {
 	max-height: 30%;
 }
 
+.tricklist__item button {
+	background: none;
+}
+
 .tricklist__item__actions {
 	position: absolute;
 	display: flex;
@@ -568,7 +623,7 @@ nav .nav__toggler span:nth-child(2) {
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	background: url(https://media.istockphoto.com/photos/snowboarder-jumping-through-air-with-deep-blue-sky-in-background-picture-id1092719712) no-repeat center / cover;
+	background: url(/img/homepage.jpg) no-repeat center / cover;
 }
 
 #header-home::before {
@@ -860,6 +915,12 @@ body:not(#accueil) #scroll-arrow.scroll-down {
 	}
 	#accueil #nav-main.scrollTop li a {
 		color: #fff;
+		text-shadow: 0 0 5px #0a161c;
+		opacity: .75;
+	}
+	#accueil #nav-main.scrollTop li a:hover, #accueil #nav-main.scrollTop li.active a {
+		opacity: 1;
+		color: #fff !important;
 	}
 	#header-home i {
 		margin-top: 8vh;

@@ -16,12 +16,22 @@
 {% block main %}
 	<div class="bg-white position-relative trick-template">
 		<article>
+
+			{% set thumbnailPath = absolute_url(asset('img/trick-default.png')) %}
+			{% set thumbnailIndex = 0 %}
+			{% set lastTrickImageIndex = 0 %}
+
 			{% if trick is defined %}
-				<header class="trick__header">
+				{% for index, trickImage in trick.trickImages %}
+					{% set lastTrickImageIndex = index %}
+					{% if trickImage.isThumbnail %}
+						{% set thumbnailPath = absolute_url(asset('upload/tricks/' ~ trickImage.filename)) %}
+						{% set thumbnailIndex = index %}
+					{% endif %}
+				{% endfor %}
+
+				<header class="trick__header" style="background: url({{ thumbnailPath }}) no-repeat center / cover">
 					<div class="trick__actions">
-						<a href="tpl-creation-edition-figure.php">
-							<i class="fad fa-edit"></i>
-						</a>
 						<a href="#">
 							<i class="fad fa-trash"></i>
 						</a>
@@ -36,90 +46,17 @@
 						<ul class="trick__info d-md-flex justify-content-between">
 							<li class="my-2 my-md-0">
 								<span class="fw-bold">Créé le :</span>
-								03/11/2021 à 10:00:00</li>
-							<li>
-								<span class="fw-bold">Modifié le :</span>
-								06/11/2021 à 15:21:00</>
+								{{ trick.creationDate|date('d/m/Y à H:i:s')}}
+							</li>
+							{% if trick.updateDate %}
+								<li>
+									<span class="fw-bold">Modifié le :</span>
+									{{ trick.updateDate|date('d/m/Y à H:i:s')}}
+								</li>
+							{% endif %}
 						</ul>
 						<hr>
 					</div>
-
-					<div class="container" id="trick__medias">
-						<div class="row">
-							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-								<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
-								<div class="trick__actions mt-3">
-									<a href="#">
-										<i class="fad fa-edit"></i>
-									</a>
-									<a href="#">
-										<i class="fad fa-trash"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-								<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
-								<div class="trick__actions mt-3">
-									<a href="#">
-										<i class="fad fa-edit"></i>
-									</a>
-									<a href="#">
-										<i class="fad fa-trash"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-								<img src="{{ absolute_url(asset('img/unnamed.png')) }}" alt="Figure n°X" class="img-fluid">
-								<div class="trick__actions mt-3">
-									<a href="#">
-										<i class="fad fa-edit"></i>
-									</a>
-									<a href="#">
-										<i class="fad fa-trash"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-								<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
-								<div class="trick__actions mt-3">
-									<a href="#">
-										<i class="fad fa-edit"></i>
-									</a>
-									<a href="#">
-										<i class="fad fa-trash"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0">
-								<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
-								<div class="trick__actions mt-3">
-									<a href="#">
-										<i class="fad fa-edit"></i>
-									</a>
-									<a href="#">
-										<i class="fad fa-trash"></i>
-									</a>
-								</div>
-							</div>
-							<div class="col-xl-2 col-lg-4 col-sm-6 text-center">
-								<iframe width="560" height="315" src="https://www.youtube.com/embed/0uGETVnkujA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="img-fluid"></iframe>
-								<div class="trick__actions mt-3">
-									<a href="#">
-										<i class="fad fa-edit"></i>
-									</a>
-									<a href="#">
-										<i class="fad fa-trash"></i>
-									</a>
-								</div>
-							</div>
-						</div>
-						<div class="text-center d-block d-lg-none">
-							<button class="cta mb-0 btn-hide-medias" data-target="#trick__medias" data-action="fadeOut">Cacher les médias</button>
-						</div>
-					</div>
-				</div>
-				<div class="text-center d-block d-lg-none">
-					<button class="cta mb-0 btn-see-medias mt-0" data-target="#trick__medias">Voir les médias</button>
 				</div>
 			{% endif %}
 			<div class="container container-custom">
@@ -127,24 +64,54 @@
 					<h1 class="h1">Nouvelle figure</h1>
 				{% endif %}
 				<form method="post" action="" enctype="multipart/form-data">
+					<input type="hidden" name="thumbnail" value="{{ thumbnailIndex }}">
+
 					<div class="row files-upload-container mb-4">
+						{% if trick is defined %}
+							{% for index, trickImage in trick.trickImages %}
+								<div class="col-sm-3 col-6">
+									<input type="hidden" name="curImage[]" value="{{ trickImage.filename }}" class="d-none">
+									<div class="upload-image-btn-wrapper has-img{% if trickImage.isThumbnail %} is-thumbnail{% endif %}" data-index="{{ index }}">
+										<i class="fa fa-image thumbnail-btn" title="Définir comme miniature"></i>
+										<i class="fa fa-times delete-btn" title="Supprimer l'image"></i>
+										<label class="upload-image-btn" style="background: url({{ absolute_url(asset('upload/tricks/' ~ trickImage.filename)) }}) no-repeat center / cover">
+											<input type="file" name="newImage[]" class="d-none">
+										</label>
+									</div>
+								</div>
+							{% endfor %}
+						{% endif %}
 						<div class="col-sm-3 col-6">
-							<label class="upload-image-btn">
-								<input type="file" name="image[]" class="d-none">
-							</label>
+							<div class="upload-image-btn-wrapper" data-index="{{ lastTrickImageIndex + 1 }}">
+								<i class="fa fa-image thumbnail-btn" title="Définir comme miniature"></i>
+								<i class="fa fa-times delete-btn" title="Supprimer l'image"></i>
+								<label class="upload-image-btn">
+									<input type="file" name="newImage[]" class="d-none">
+								</label>
+							</div>
 						</div>
 					</div>
 
 					<div class="mb-5">
-						<select class="select2 select2-tags form-control" name="embed_code[]" multiple></select>
+						<select class="select2 select2-tags form-control" name="embed_code[]" multiple>
+							{% if trick is defined %}
+								{% for trickVideo in trick.trickVideos %}
+									<option value="{{ trickVideo.embedCode }}" selected>{{ trickVideo.embedCode }}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
 					</div>
 
 					<div class="mb-5">
-						<input type="text" name="title" id="title" class="input-custom" placeholder="Titre">
+						<input type="text" name="title" id="title" class="input-custom" placeholder="Titre" {% if trick is defined %} value="{{ trick.title }}" {% endif %}>
 					</div>
 
 					<div class="mb-5">
-						<textarea name="description" id="description" class="tinymce" placeholder="Contenu"></textarea>
+						<textarea name="description" id="description" class="tinymce" placeholder="Contenu">
+							{% if trick is defined %}
+								{{ trick.description }}
+							{% endif %}
+						</textarea>
 					</div>
 
 					<div class="row">
@@ -152,14 +119,14 @@
 							<select name="category" id="category" class="select2">
 								<option></option>
 								{% for category in trickCategories %}
-									<option value="{{ category.id }}">{{ category.name }}</option>
+									<option value="{{ category.id }}" {% if trick is defined and category.id == trick.category.id %} selected {% endif %}>{{ category.name }}</option>
 								{% endfor %}
 							</select>
 						</div>
 						<div class="col offset-md-1 text-md-start text-center">
 							<div>
 								<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
-									<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1">
+									<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1" {% if trick is defined and trick.isDraft %} checked {% endif %}>
 									<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
 								</div>
 							</div>

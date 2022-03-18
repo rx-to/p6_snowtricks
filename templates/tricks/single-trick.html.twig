@@ -16,9 +16,9 @@
 
 	<div class="bg-white position-relative trick-template">
 		<article data-item-type="figure" data-item-title="{{ trick.title }}" data-item-id="{{ trick.id }}" data-item-redirect="1">
-			<header class="trick__header" {% if headerImage %} style="background: url({{ headerImage }}), no-repeat center / contain" {% endif %}>
+			<header class="trick__header" {% if headerImage %} style="background: url({{ headerImage }}) no-repeat center / cover" {% endif %}>
 				<div class="trick__actions">
-					<a href="tpl-creation-edition-figure.php">
+					<a href="{{ path('app_edit_trick', {slug: trick.slug}) }}">
 						<i class="fad fa-edit"></i>
 					</a>
 					<button type="button" data-bs-toggle="modal" data-bs-target="#delete-item-modal" data-action="call-popup-delete-item">
@@ -86,13 +86,19 @@
 		<div class="section pt-0">
 			<div class="container">
 				<hr>
-				<form method="post" action="{{ path('app_post_comment') }}" class="container container-custom px-0 px-lg-4">
-					<input type="hidden" name="trick_id" value="{{ trick.id }}">
-					<textarea name="comment" id="comment" rows="5" placeholder="Votre commentaire..." class="input-custom"></textarea>
-					<div class="text-center">
-						<button class="cta mb-0">Envoyer</button>
+				{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+					<form method="post" action="{{ path('app_post_comment') }}" class="container container-custom px-0 px-lg-4">
+						<input type="hidden" name="trick_id" value="{{ trick.id }}">
+						<textarea name="comment" id="comment" rows="5" placeholder="Votre commentaire..." class="input-custom"></textarea>
+						<div class="text-center">
+							<button class="cta mb-0">Envoyer</button>
+						</div>
+					</form>
+				{% else %}
+					<div class="alert alert-warning">
+						<p class="mb-0">Vous devez être connecté(e) afin de laisser un commentaire. :)</p>
 					</div>
-				</form>
+				{% endif %}
 				<hr>
 				{% include "tricks/messages-block.inc.html.twig" %}
 			</div>

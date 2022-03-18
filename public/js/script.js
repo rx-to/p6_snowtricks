@@ -168,21 +168,36 @@ var seeMoreMessagesButton = $("#btn-see-more-messages");
 if (seeMoreTricksButton.length) buttonEvent(seeMoreTricksButton, "on", $(".tricklist"));
 if (seeMoreMessagesButton.length) buttonEvent(seeMoreMessagesButton, "on", $(".comment-list"));
 
+let imgWrapperIndex = 0;
 $(document).on("change", ".upload-image-btn input", function (e) {
 	showPreview(e, $(this).closest(".upload-image-btn"));
+	if ($(this).closest(".upload-image-btn-wrapper").attr("data-index") == 0) $(".upload-image-btn-wrapper[data-index=0]").addClass("is-thumbnail");
+	if ($(".upload-image-btn-wrapper:not(.has-img)").length == 0) {
+		imgWrapperIndex++;
+		$(".files-upload-container").append('<div class="col-sm-3 col-6"><div class="upload-image-btn-wrapper" data-index="' + imgWrapperIndex + '"><i class="fa fa-image thumbnail-btn" title="Définir comme miniature"></i><i class="fa fa-times delete-btn" title="Supprimer l\'image"></i><label class="upload-image-btn"><input type="file" name="newImage[]" class="d-none"></label></div></div>');
+	}
+});
 
-	if ($(".upload-image-btn:not(.has-img)").length == 0) $(".files-upload-container").append('<div class="col-sm-3 col-6"><label class="upload-image-btn"><input type="file" name="image[]" class="d-none"></label></div>');
+$(document).on("click", ".thumbnail-btn", function (e) {
+	$(".is-thumbnail").removeClass("is-thumbnail");
+	if (!$(this).closest(".upload-image-btn-wrapper").hasClass("is-thumbnail")) $(this).closest(".upload-image-btn-wrapper").addClass("is-thumbnail");
+	$("input[name=thumbnail]").val($(this).closest(".is-thumbnail").attr("data-index"));
+	$(".trick__header").css("background", $(this).closest(".upload-image-btn-wrapper").find(".upload-image-btn").css("background"));
+});
+
+$(document).on("click", ".delete-btn", function (e) {
+	$(this).closest(".col-sm-3").remove();
 });
 
 function showPreview(e, target) {
 	if (e.target.files.length > 0) {
 		var src = URL.createObjectURL(e.target.files[0]);
-		if (!target.hasClass("has-img")) target.addClass("has-img");
+		if (!$(target).closest(".upload-image-btn-wrapper").hasClass("has-img")) $(target).closest(".upload-image-btn-wrapper").addClass("has-img");
 		target.css("background", "url(" + src + ") no-repeat center / cover");
 	}
 }
 
 $(".select2-tags").select2({
 	tags: true,
-	placeholder: "Collez vos embed codes ici !"
-  });
+	placeholder: "Collez vos embed codes ici !",
+});
