@@ -38,6 +38,42 @@ class TrickController extends AbstractController
         return ['tricks' => $tricks, 'countPages' => $countPages, 'curPage' => $curPage];
     }
 
+    private function uploadImages(array $formTrickImages, int $trickThumbnail, Trick $trick, Slugify $slugify)
+    {
+        foreach ($formTrickImages as $key => $formTrickImage) {
+
+            $originalFilename = pathinfo($formTrickImage->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename     = $slugify->slugify($originalFilename);
+            $newFilename      = $safeFilename . '-' . uniqid() . '.' . $formTrickImage->guessExtension();
+
+            try {
+                $formTrickImage->move(
+                    $this->getParameter('app_tricks_images_dir'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors du téléversement d'une image."]);
+            }
+
+            $formTrickImage = new TrickImage();
+            $formTrickImage
+                ->setFilename($newFilename)
+                ->setIsThumbnail($key == $trickThumbnail ? true : false);
+            $trick->addTrickImage($formTrickImage);
+        }
+    }
+
+    private function uploadVideos(array $embedCodes, array $alreadyExistingVideos = [], Trick $trick)
+    {
+        foreach ($embedCodes as $embedCode) {
+            if (empty($alreadyExistingVideos) || !in_array($embedCode, $alreadyExistingVideos)) {
+                $trickVideo = new TrickVideo();
+                $trickVideo->setEmbedCode($embedCode);
+                $trick->addTrickVideo($trickVideo);
+            }
+        }
+    }
+
     #[Route('/', name: 'app_home')]
     public function home(ManagerRegistry $managerRegistry, int $limit = 15, int $curPage = 1): Response
     {
@@ -127,38 +163,14 @@ class TrickController extends AbstractController
             $slug            = $slugify->slugify("$newID-" . $request->get('title'));
 
             // Trick images.
-            if (($formTrickImages = $request->files->get('newImage')) && ($trickThumbnail = filter_var($request->get('thumbnail'), FILTER_VALIDATE_INT))) {
-                foreach ($formTrickImages as $key => $formTrickImage) {
+            $trickThumbnail = filter_var($request->get('thumbnail'), FILTER_VALIDATE_INT);
 
-                    $originalFilename = pathinfo($formTrickImage->getClientOriginalName(), PATHINFO_FILENAME);
-                    $safeFilename     = $slugify->slugify($originalFilename);
-                    $newFilename      = $safeFilename . '-' . uniqid() . '.' . $formTrickImage->guessExtension();
-
-                    try {
-                        $formTrickImage->move(
-                            $this->getParameter('app_tricks_images_dir'),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors du téléversement d'une image."]);
-                    }
-
-                    $formTrickImage = new TrickImage();
-                    $formTrickImage
-                        ->setFilename($newFilename)
-                        ->setIsThumbnail($key == $trickThumbnail ? true : false);
-                    $trick->addTrickImage($formTrickImage);
-                }
-            }
+            if ($formTrickImages = $request->files->get('newImage'))
+                $this->uploadImages($formTrickImages, $trickThumbnail, $trick, $slugify);
 
             // Trick videos.
-            if ($embedCodeList = $request->get('embed_code')) {
-                foreach ($embedCodeList as $embedCode) {
-                    $trickVideo = new TrickVideo();
-                    $trickVideo->setEmbedCode($embedCode);
-                    $trick->addTrickVideo($trickVideo);
-                }
-            }
+            if ($embedCodeList = $request->get('embed_code'))
+                $this->uploadVideos($embedCodeList, [], $trick);
 
             $trick
                 ->setAuthor($user)
@@ -210,28 +222,8 @@ class TrickController extends AbstractController
                 $trickThumbnail  = filter_var($request->get('thumbnail'), FILTER_VALIDATE_INT);
 
                 // New image
-                if ($formNewTrickImages = $request->files->get('newImage')) {
-                    foreach ($formNewTrickImages as $key => $formNewTrickImage) {
-                        $originalFilename = pathinfo($formNewTrickImage->getClientOriginalName(), PATHINFO_FILENAME);
-                        $safeFilename     = $slugify->slugify($originalFilename);
-                        $newFilename      = $safeFilename . '-' . uniqid() . '.' . $formNewTrickImage->guessExtension();
-
-                        try {
-                            $formNewTrickImage->move(
-                                $this->getParameter('app_tricks_images_dir'),
-                                $newFilename
-                            );
-                        } catch (FileException $e) {
-                            return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors du téléversement d'une image."]);
-                        }
-
-                        $formNewTrickImage = new TrickImage();
-                        $formNewTrickImage
-                            ->setFilename($newFilename)
-                            ->setIsThumbnail($key == $trickThumbnail ? true : false);
-                        $trick->addTrickImage($formNewTrickImage);
-                    }
-                }
+                if ($formNewTrickImages = $request->files->get('newImage'))
+                    $this->uploadImages($formNewTrickImages, $trickThumbnail, $trick, $slugify);
 
                 // Already existing images.
                 $trickImages = $trick->getTrickImages();
@@ -264,19 +256,8 @@ class TrickController extends AbstractController
             }
 
             // New videos.
-            if (!empty($embedCodes)) {
-                foreach ($embedCodes as $embedCode) {
-                    if (!in_array($embedCode, $alreadyExistingVideos)) {
-                        $trickVideo = new TrickVideo();
-                        $trickVideo->setEmbedCode($embedCode);
-                        $trick->addTrickVideo($trickVideo);
-                    }
-                }
-            }
-
-
-            // dump($alreadyExistingVideos);
-            // dd($embedCodes);
+            if (!empty($embedCodes))
+                $this->uploadVideos($embedCodes, $alreadyExistingVideos, $trick);
 
             $trick
                 ->setAuthor($user)
