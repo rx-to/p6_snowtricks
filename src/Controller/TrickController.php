@@ -187,11 +187,9 @@ class TrickController extends AbstractController
             try {
                 // Everything went well => redirect to tricks page with success alert.
                 $entityManager->flush();
-                $this->addFlash('success', "La figure <strong>" . $trick->getTitle() . "</strong> a bien été ajoutée.");
                 return $this->redirectToRoute('app_tricks');
             } catch (Exception $e) {
                 // Displays error on same page.
-                echo $e->getMessage();
                 return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors de la création de la figure <strong>" . $trick->getTitle() . "</strong>."]);
             }
         }
@@ -274,11 +272,9 @@ class TrickController extends AbstractController
             try {
                 // Everything went well => redirect to tricks page with success alert.
                 $entityManager->flush();
-                $this->addFlash('success', "La figure <strong>" . $trick->getTitle() . "</strong> a bien été ajoutée.");
-                return $this->redirectToRoute('app_tricks');
+                return $this->redirectToRoute('app_single_trick', ['slug' => $trick->getSlug()]);
             } catch (Exception $e) {
                 // Displays error on same page.
-                echo $e->getMessage();
                 return $this->json(['success' => false, 'feedback' => "Une erreur est survenue lors de la création de la figure <strong>" . $trick->getTitle() . "</strong>."]);
             }
         }
