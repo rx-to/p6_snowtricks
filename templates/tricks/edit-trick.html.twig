@@ -78,7 +78,7 @@
 							{% endfor %}
 						{% endif %}
 						<div class="col-sm-3 col-6">
-							<div class="upload-image-btn-wrapper" data-index="{{ lastTrickImageIndex == 0 and trick.trickImages|length == 0 ? 0 : lastTrickImageIndex + 1 }}">
+							<div class="upload-image-btn-wrapper" data-index="{{ (trick is defined and lastTrickImageIndex == 0 and trick.trickImages|length == 0) or trick is not defined ? 0 : lastTrickImageIndex + 1 }}">
 								<i class="fa fa-image thumbnail-btn" title="Définir comme miniature"></i>
 								<i class="fa fa-times delete-btn" title="Supprimer l'image"></i>
 								<label class="upload-image-btn">
@@ -87,6 +87,8 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="row embed-videos-container"></div>
 
 					<div class="mb-5">
 						<select class="select2 select2-tags form-control" name="embed_code[]" multiple>

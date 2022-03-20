@@ -171,7 +171,7 @@ if (seeMoreMessagesButton.length) buttonEvent(seeMoreMessagesButton, "on", $(".c
 let imgWrapperIndex = 0;
 $(document).on("change", ".upload-image-btn input", function (e) {
 	showPreview(e, $(this).closest(".upload-image-btn"));
-	if ($(this).closest(".upload-image-btn-wrapper").attr("data-index") == 0) $(".upload-image-btn-wrapper[data-index=0]").find('.thumbnail-btn').click();
+	if ($(this).closest(".upload-image-btn-wrapper").attr("data-index") == 0) $(".upload-image-btn-wrapper[data-index=0]").find(".thumbnail-btn").click();
 	if ($(".upload-image-btn-wrapper:not(.has-img)").length == 0) {
 		imgWrapperIndex++;
 		$(".files-upload-container").append('<div class="col-sm-3 col-6"><div class="upload-image-btn-wrapper" data-index="' + imgWrapperIndex + '"><i class="fa fa-image thumbnail-btn" title="Définir comme miniature"></i><i class="fa fa-times delete-btn" title="Supprimer l\'image"></i><label class="upload-image-btn"><input type="file" name="newImage[]" class="d-none"></label></div></div>');
@@ -188,6 +188,23 @@ $(document).on("click", ".thumbnail-btn", function (e) {
 $(document).on("click", ".delete-btn", function (e) {
 	$(this).closest(".col-sm-3").remove();
 });
+
+$(".select2-tags").on("select2:unselect select2:select", function (e) {
+	updateVideoContainer(e, $(this).val());
+});
+
+function updateVideoContainer(e, options) {
+	let container = $(".embed-videos-container");
+	let embedCode = $(e.delegateTarget).attr("title");
+	let containerHTML = "";
+
+	$.each(options, function (index, embedCode) {
+		containerHTML += '<div class="col-sm-3 col-6"><div class="position-relative">' + embedCode + "</div></div>";
+	});
+
+	if (!container.hasClass("mb-4")) container.addClass("mb-4");
+	container.html(containerHTML);
+}
 
 function showPreview(e, target) {
 	if (e.target.files.length > 0) {
