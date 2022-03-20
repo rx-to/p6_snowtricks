@@ -6,17 +6,12 @@
 	{% set title = "Créer une nouvelle figure" %}
 {% endif %}
 
-{% block slug %}template-figure
-{% endblock %}
-
-{% block title %}
-	{{ title }}
-{% endblock %}
+{% block slug %}template-figure{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block main %}
 	<div class="bg-white position-relative trick-template">
 		<article>
-
 			{% set thumbnailPath = absolute_url(asset('img/trick-default.png')) %}
 			{% set thumbnailIndex = 0 %}
 			{% set lastTrickImageIndex = 0 %}
@@ -31,13 +26,13 @@
 				{% endfor %}
 
 				<header class="trick__header" style="background: url({{ thumbnailPath }}) no-repeat center / cover">
-
 					<h1 class="h1">Édition :
 						{{ trick.title }}</h1>
 				</header>
 			{% endif %}
-			<div class="section pb-0">
-				{% if trick is defined %}
+
+			{% if trick is defined %}
+				<div class="section pb-0">
 					<div class="container container-custom">
 						<ul class="trick__info d-md-flex justify-content-between">
 							<li class="my-2 my-md-0">
@@ -55,11 +50,12 @@
 					</div>
 				</div>
 			{% endif %}
+
 			<div class="container container-custom">
 				{% if trick is not defined %}
 					<h1 class="h1">Nouvelle figure</h1>
 				{% endif %}
-				<form method="post" action="" enctype="multipart/form-data">
+				<form method="post" action="{{ app.request.pathinfo }}" enctype="multipart/form-data">
 					<input type="hidden" name="thumbnail" value="{{ thumbnailIndex }}">
 
 					<div class="row files-upload-container mb-4">
@@ -122,13 +118,13 @@
 							</select>
 						</div>
 						{# <div class="col offset-md-1 text-md-start text-center">
-							<div>
-								<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
-									<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1" {% if trick is defined and trick.isDraft %} checked {% endif %}>
-									<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
-								</div>
-							</div>
-						</div> #}
+																									<div>
+																										<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
+																											<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1" {% if trick is defined and trick.isDraft %} checked {% endif %}>
+																											<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
+																										</div>
+																									</div>
+																								</div> #}
 					</div>
 
 					<div class="text-center">
