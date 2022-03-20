@@ -14,9 +14,12 @@
 		<div class="alert" style="display:none;"></div>
 	{% endif %}
 	
-	<a href="{{ path('app_new_trick') }}" class="cta cta-new-trick mt-0">
-		<i class="fa fa-plus me-3"></i>Nouvelle figure
-	</a>
+	<div class="text-lg-start text-center">
+		<a href="{{ path('app_new_trick') }}" class="cta cta-new-trick mt-0">
+			<i class="fa fa-plus me-3"></i>Nouvelle figure
+		</a>
+	</div>
+	
 {% endif %}
 
 {% block tricklist %}

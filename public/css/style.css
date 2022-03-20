@@ -227,8 +227,7 @@ body:not(#accueil) #nav-main {
 }
 
 .upload-image-btn-wrapper .thumbnail-btn,
-.upload-image-btn-wrapper .delete-btn,
-.embed-videos-container .delete-btn {
+.upload-image-btn-wrapper .delete-btn {
 	position: absolute;
 	top: 0;
 	font-size: 3rem;
@@ -241,8 +240,7 @@ body:not(#accueil) #nav-main {
 	color: grey;
 }
 
-.upload-image-btn-wrapper .delete-btn,
-.embed-videos-container .delete-btn {
+.upload-image-btn-wrapper .delete-btn {
 	right: 0;
 	color: var(--bs-danger);
 	cursor: pointer;
@@ -404,6 +402,7 @@ button:not(.btn):hover,
 	text-transform: uppercase;
 	font-weight: 700;
 	margin: 4rem 0 3.5rem;
+	font-size: 1.4rem;
 }
 
 .cta:hover {
@@ -923,9 +922,10 @@ body:not(#accueil) #scroll-arrow.scroll-down {
 	#accueil #nav-main.scrollTop li a {
 		color: #fff;
 		text-shadow: 0 0 5px #0a161c;
-		opacity: .75;
+		opacity: 0.75;
 	}
-	#accueil #nav-main.scrollTop li a:hover, #accueil #nav-main.scrollTop li.active a {
+	#accueil #nav-main.scrollTop li a:hover,
+	#accueil #nav-main.scrollTop li.active a {
 		opacity: 1;
 		color: #fff !important;
 	}
