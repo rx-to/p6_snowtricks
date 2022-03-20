@@ -70,7 +70,7 @@
 						</li>
 						<li class="my-2 my-md-0">
 							<span class="fw-bold">Créé le :</span>
-							03/11/2021 à 10:00:00
+							{{ trick.creationDate|date('d/m/Y à H:i:s')}}
 						</li>
 						{% if trick.updateDate %}
 							<li>

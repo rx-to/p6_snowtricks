@@ -78,7 +78,7 @@
 							{% endfor %}
 						{% endif %}
 						<div class="col-sm-3 col-6">
-							<div class="upload-image-btn-wrapper" data-index="{{ lastTrickImageIndex + 1 }}">
+							<div class="upload-image-btn-wrapper" data-index="{{ lastTrickImageIndex == 0 and trick.trickImages|length == 0 ? 0 : lastTrickImageIndex + 1 }}">
 								<i class="fa fa-image thumbnail-btn" title="Définir comme miniature"></i>
 								<i class="fa fa-times delete-btn" title="Supprimer l'image"></i>
 								<label class="upload-image-btn">
@@ -111,7 +111,7 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-9 mb-md-0 mb-4">
+						<div class="col-md-12 mb-md-0 mb-4">
 							<select name="category" id="category" class="select2">
 								<option></option>
 								{% for category in trickCategories %}
@@ -119,14 +119,14 @@
 								{% endfor %}
 							</select>
 						</div>
-						<div class="col offset-md-1 text-md-start text-center">
+						{# <div class="col offset-md-1 text-md-start text-center">
 							<div>
 								<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
 									<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1" {% if trick is defined and trick.isDraft %} checked {% endif %}>
 									<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
 								</div>
 							</div>
-						</div>
+						</div> #}
 					</div>
 
 					<div class="text-center">

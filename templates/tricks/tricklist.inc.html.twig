@@ -1,8 +1,6 @@
 {% block tricklistItems %}
-
-	{% set thumbnail = absolute_url(asset('img/trick-default.png')) %}
-
 	{% for trick in tricks %}
+		{% set thumbnail = absolute_url(asset('img/trick-default.png')) %}
 		{% for trickImage in trick.trickImages %}
 			{% if trickImage.isThumbnail %}
 				{% set thumbnail =  absolute_url(asset('upload/tricks/' ~ trickImage.filename)) %}

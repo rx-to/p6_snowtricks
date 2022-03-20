@@ -41,7 +41,6 @@ class TrickController extends AbstractController
     private function uploadImages(array $formTrickImages, int $trickThumbnail, Trick $trick, Slugify $slugify)
     {
         foreach ($formTrickImages as $key => $formTrickImage) {
-
             $originalFilename = pathinfo($formTrickImage->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename     = $slugify->slugify($originalFilename);
             $newFilename      = $safeFilename . '-' . uniqid() . '.' . $formTrickImage->guessExtension();
@@ -215,15 +214,10 @@ class TrickController extends AbstractController
             $slug    = $slugify->slugify($trick->getId() . '-' . $request->get('title'));
 
             // Trick images.
+            $trickThumbnail  = filter_var($request->get('thumbnail'), FILTER_VALIDATE_INT);
+
+            // Already existing images.
             if ($formCurTrickImages = $request->get('curImage')) {
-
-                $trickThumbnail  = filter_var($request->get('thumbnail'), FILTER_VALIDATE_INT);
-
-                // New image
-                if ($formNewTrickImages = $request->files->get('newImage'))
-                    $this->uploadImages($formNewTrickImages, $trickThumbnail, $trick, $slugify);
-
-                // Already existing images.
                 $trickImages = $trick->getTrickImages();
                 foreach ($trickImages as $key => $trickImage) {
                     if (!in_array($trickImage->getFilename(), $formCurTrickImages)) {
@@ -238,8 +232,12 @@ class TrickController extends AbstractController
                 }
             }
 
-            $embedCodes = $request->get('embed_code');
+            // New image
+            if ($formNewTrickImages = $request->files->get('newImage'))
+                $this->uploadImages($formNewTrickImages, $trickThumbnail, $trick, $slugify);
 
+            // Trick videos
+            $embedCodes            = $request->get('embed_code');
             $trickVideos           = $trick->getTrickVideos();
             $alreadyExistingVideos = [];
 
@@ -262,7 +260,7 @@ class TrickController extends AbstractController
                 ->setCategory($trickCategory)
                 ->setTitle($request->get('title'))
                 ->setDescription($request->get('description'))
-                ->setCreationDate(new DateTime())
+                ->setUpdateDate(new DateTime())
                 ->setIsDraft($request->get('is_draft') ? 1 : 0)
                 ->setSlug($slug);
 
