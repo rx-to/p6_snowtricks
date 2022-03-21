@@ -2,11 +2,15 @@
 
 {% if trick is defined %}
 	{% set title = "Édition : " ~ trick.title %}
+	{% set metaDesc = "Des améliorations à apporter ? Éditez la figure « " ~ trick.title ~ " »." %}
 {% else %}
 	{% set title = "Créer une nouvelle figure" %}
+	{% set metaDesc = "Créez une figure et partagez-la avec toute la communauté !" %}
+
 {% endif %}
 
 {% block slug %}template-figure{% endblock %}
+{% block metaDesc %}{% endblock %}
 {% block title %}{{ title }}{% endblock %}
 
 {% block main %}

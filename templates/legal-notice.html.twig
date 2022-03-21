@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block slug %}mentions-legales{% endblock %}
+{% block title %}Mentions légales{% endblock %}
+{% block metaDesc %}Veuillez lire attentivement nos mentions légales afin de naviguer sur le site en toute conscience.{% endblock %}
+{% block main %}
+	<section>
+		<div class="container bg-white rounded">
+			<div class="section text-start text-lg-center">
+				<h1 class="h1">Mentions légales</h1>
+				<p>Conformément aux dispositions des Articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la
+					               Confiance dans l’économie numérique, dite L.C.E.N., il est porté à la connaissance des utilisateurs et
+					               visiteurs du site
+					<strong>Snowtricks</strong>
+					(<a href="{{ path('app_home') }}">https://snowtricks.siocnarf.fr/</a>), les
+						               présentes mentions légales.</p>
+				<p>La connexion et la navigation sur le Site par l’Utilisateur implique acceptation intégrale et sans réserve
+					               présentes mentions légales.</p>
+
+				<h2 class="h3 text-lg-center text-start">Article 1 - L'éditeur</h2>
+				<p>L’édition et la direction de la publication du Site est assurée par François ESPIASSE dont l'adresse e-mail
+									est
+					<a href="mailto:contact@siocnarf.fr" title="Envoyer un e-mail à François ESPIASSE">contact@siocnarf.fr</a>.</p>
+
+				<h2 class="h3 text-lg-center text-start">Article 2 - L'hébergeur</h2>
+				<p>L'hébergeur du Site est la société
+					<a href="https://www.ionos.fr/" target="_blank">IONOS SARL</a>, dont le siège social est situé au 7 PLACE DE LA
+										GARE 57200 SARREGUEMINES et le numéro de téléphone :
+					<a href="tel:+33891653185" title="Contacter IONOS SARL">0891653185</a>.</p>
+
+				<h2 class="h3 text-lg-center text-start">Article 3 - Accès au site</h2>
+				<p>Le Site est accessible en tout endroit, 7j/7, 24h/24 sauf en cas de force majeure, interruption 
+                programmée ou non et pouvant découler d’une nécessité de maintenance.</p>
+				<p>En cas de modification, interruption ou suspension du site, l'Editeur ne saurait être tenu responsable.</p>
+				<h2 class="h3 text-lg-center text-start">Article 4 - Collecte des données</h2>
+				<p>Le site est exempté de déclaration à la Commission Nationale Informatique et Libertés (CNIL) dans la
+                    mesure où il ne collecte aucune donnée concernant les utilisateurs.</p>
+				<p>Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie du site,
+                    sans autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires
+                    telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil.</p>
+			</div>
+		</div>
+	</section>
+{% endblock %}

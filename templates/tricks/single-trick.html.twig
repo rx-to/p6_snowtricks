@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block slug %}template-figure{% endblock %}
 {% block title %}{{ trick.title }}{% endblock %}
+{% block metaDesc %}Découvrez la figure « {{ trick.title }} »{% endblock %}
+
 {% set headerImage = null %}
 {% for image in trick.trickImages %}
 	{% if image.isThumbnail %}

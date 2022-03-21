@@ -1,6 +1,6 @@
 /* Cookie bar */
 tarteaucitron.init({
-    "privacyUrl": "/charte-de-confidentialite", /* Privacy policy url */
+    "privacyUrl": "/mentions-legales/", /* Privacy policy url */
 
     "hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
     "cookieName": "tarteaucitron", /* Cookie name */
@@ -35,12 +35,6 @@ tarteaucitron.init({
 
     "mandatory": false, /* Show a message about mandatory cookies */
 });
-
-tarteaucitron.user.gtagUa = '';
-tarteaucitron.user.gtagMore = function () {
-    /* add here your optionnal gtag() */
-};
-(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
 
 $('a[href="\#gestion-des-cookies"]').on('click', function (e) {
     e.preventDefault();

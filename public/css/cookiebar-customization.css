@@ -69,14 +69,14 @@ button#tarteaucitronPrivacyUrl {
 /* Fond « Panneau de gestion des cookies » */
 
 div#tarteaucitronMainLineOffset {
-	background-color: #000000 !important;
+	background-color: var(--steel-blue)!important;
 	border: 0 !important;
 }
 
 /* Fond du bloc de texte « En autorisant[...]bon fonctionnement.» */
 
 div#tarteaucitronInfo {
-	background-color: #000000 !important;
+	background-color: transparent !important;
 	border: 0;
 }
 
@@ -91,13 +91,13 @@ div#tarteaucitronInfo {
 }
 
 #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronAllow:hover, #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny:hover, .tac_activate .tarteaucitronAllow:hover {
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 /* Boutons « Tout refuser » et « Interdire » */
 
 #tarteaucitron #tarteaucitronServices .tarteaucitronLine.tarteaucitronIsDenied .tarteaucitronDeny, #tarteaucitron #tarteaucitronServices #tarteaucitronAllDenied.tarteaucitronIsSelected, #tarteaucitron #tarteaucitronServices #tarteaucitronAllDenied2.tarteaucitronIsSelected, #tarteaucitronAlertBig #tarteaucitronCloseAlert:hover, #tarteaucitronPrivacyUrlDialog:hover, .tarteaucitronDeny:hover {
-	background-color: #000000 !important;
+	background-color: var(--bs-red) !important;
 	color: #ffffff !important;
 }
 
@@ -108,7 +108,7 @@ div#tarteaucitronInfo {
 /* Boutons « Tout accepter » et « Autoriser » */
 
 #tarteaucitron #tarteaucitronServices .tarteaucitronLine.tarteaucitronIsAllowed .tarteaucitronAsk .tarteaucitronAllow, #tarteaucitron #tarteaucitronServices #tarteaucitronAllAllowed.tarteaucitronIsSelected, .tarteaucitronAllow:hover {
-	background-color: #000000 !important;
+	background-color: var(--bs-green) !important;
 	color: #ffffff;
 }
 
@@ -122,7 +122,11 @@ div#tarteaucitronInfo {
 /* Bouton « + Mesure d'audience » */
 
 button.catToggleBtn {
-	background-color: #000000 !important;
+	background-color: var(--steel-blue) !important;
+}
+
+button.catToggleBtn:hover {
+	color: #ffffff !important;
 }
 
 /* Bouton « Fermer » */
