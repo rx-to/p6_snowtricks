@@ -12,7 +12,7 @@
 				<img src="{{ thumbnail }}" alt="{{ trick.title }}" class="img-fluid">
 				<figcaption>
 					<a href="{{ path('app_single_trick', {slug: trick.slug}) }}">{{ trick.title }}</a>
-					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.id == trick.author.id %}
 						<div class="tricklist__item__actions">
 							<a href="{{ path('app_edit_trick', {slug: trick.slug}) }}" class="me-2">
 								<i class="fa fa-edit"></i>

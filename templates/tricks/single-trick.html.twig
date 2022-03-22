@@ -16,14 +16,16 @@
 	<div class="bg-white position-relative trick-template">
 		<article data-item-type="figure" data-item-title="{{ trick.title }}" data-item-id="{{ trick.id }}" data-item-redirect="1">
 			<header class="trick__header" {% if headerImage %} style="background: url({{ headerImage }}) no-repeat center / cover" {% endif %}>
-				<div class="trick__actions">
-					<a href="{{ path('app_edit_trick', {slug: trick.slug}) }}">
-						<i class="fad fa-edit"></i>
-					</a>
-					<button type="button" data-bs-toggle="modal" data-bs-target="#delete-item-modal" data-action="call-popup-delete-item">
-						<i class="fad fa-trash"></i>
-					</button>
-				</div>
+				{% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.id == trick.author.id %}
+					<div class="trick__actions">
+						<a href="{{ path('app_edit_trick', {slug: trick.slug}) }}">
+							<i class="fad fa-edit"></i>
+						</a>
+						<button type="button" data-bs-toggle="modal" data-bs-target="#delete-item-modal" data-action="call-popup-delete-item">
+							<i class="fad fa-trash"></i>
+						</button>
+					</div>
+				{% endif %}
 				<h1 class="h1">{{ trick.title }}</h1>
 			</header>
 
