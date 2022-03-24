@@ -14,7 +14,7 @@ class EmailIsNotRegisteredValidator extends ConstraintValidator
 {
     private $managerRegistry;
 
-    function __construct(ManagerRegistry $managerRegistry)
+    public function __construct(ManagerRegistry $managerRegistry)
     {
         $this->managerRegistry = $managerRegistry;
     }
@@ -29,7 +29,7 @@ class EmailIsNotRegisteredValidator extends ConstraintValidator
         }
 
         $userRepository  = new UserRepository($this->managerRegistry);
-      
+
         if ($userRepository->findOneBy(['email' => $value, 'isVerified' => 1])) {
             // the argument must be a string or an object implementing __toString()
             $this->context->buildViolation($constraint->message)
