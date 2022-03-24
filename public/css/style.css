@@ -110,7 +110,9 @@ footer {
 
 /* Headings */
 
-.h1, .h2, .h3 {
+.h1,
+.h2,
+.h3 {
 	font-family: "Chelsea Market", cursive;
 }
 
@@ -489,6 +491,14 @@ nav .nav__toggler span:nth-child(2) {
 	display: flex;
 	align-items: center;
 	margin: 0.75rem 0;
+	max-height: 17rem;
+	overflow: hidden;
+	height: 100%;
+}
+
+.tricklist__item img {
+	min-height: 100%;
+	max-width: 100%;
 }
 
 .tricklist__item figcaption {
