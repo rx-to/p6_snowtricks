@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Validator\EmailIsNotRegistered;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -45,7 +46,8 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => 'Votre adresse eemail est trop courte.',
                         'max'        => 255,
                         'maxMessage' => 'Votre adresse email ne peut pas excéder 255 caractères.'
-                    ])
+                    ]),
+                    new EmailIsNotRegistered()
                 ]
             ])
             ->add('plainPassword', PasswordType::class, [

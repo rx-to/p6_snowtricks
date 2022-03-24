@@ -14,14 +14,6 @@
 				</div>
 			{% endif %}
 
-			{% for label, messages in app.flashes %}
-				{% for message in messages %}
-					<p class="text-{{ label }} mb-5">
-						{{ message }}
-					</p>
-				{% endfor %}
-			{% endfor %}
-
 			{{ form_label(registrationForm.username, 'Pseudo', {'label_attr': {'class': 'label-custom'}}) }}
 			{{ form_widget(registrationForm.username, {'attr': {'class': 'input-custom', 'placeholder': 'Pseudo'}}) }}
 			{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'label-custom'}}) }}

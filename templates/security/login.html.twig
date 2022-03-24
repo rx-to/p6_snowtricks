@@ -14,6 +14,14 @@
 				<div class="text-danger mb-5">{{ error.messageKey|trans(error.messageData, 'security')|nl2br }}</div>
 			{% endif %}
 
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<p class="text-{{ label }} mb-5">
+						{{ message }}
+					</p>
+				{% endfor %}
+			{% endfor %}
+
 			<label for="inputUsername" class="label-custom required">Pseudo</label>
 			<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="input-custom" autocomplete="username" placeholder="Pseudo" required autofocus>
 			<label for="inputPassword" class="label-custom required">Mot de passe</label>
