@@ -316,6 +316,11 @@ body:not(#accueil) #nav-main {
 	color: var(--steel-blue);
 }
 
+.label-custom.required::after {
+    content: " *";
+    color: var(--bs-red);
+}
+
 input + label {
 	margin-top: 3rem;
 }

@@ -8,6 +8,8 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -22,6 +24,7 @@ class Trick
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=100)
      */
     private $title;
@@ -48,6 +51,7 @@ class Trick
     private $category;
 
     /**
+     * @Assert\NotNull
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */

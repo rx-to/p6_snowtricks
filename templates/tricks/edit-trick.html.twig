@@ -101,10 +101,12 @@
 					</div>
 
 					<div class="mb-5">
-						<input type="text" name="title" id="title" class="input-custom" placeholder="Titre" {% if trick is defined %} value="{{ trick.title }}" {% endif %}>
+						<label for="title" class="label-custom required">Titre</label>
+						<input type="text" name="title" id="title" class="input-custom" placeholder="Titre" {% if trick is defined %} value="{{ trick.title }}" {% endif %} required>
 					</div>
 
 					<div class="mb-5">
+						<label for="description" class="label-custom required">Description</label>
 						<textarea name="description" id="description" class="tinymce" placeholder="Contenu">
 							{% if trick is defined %}
 								{{ trick.description }}
@@ -114,7 +116,8 @@
 
 					<div class="row">
 						<div class="col-md-12 mb-md-0 mb-4">
-							<select name="category" id="category" class="select2">
+							<label for="category" class="label-custom required">Catégorie</label>
+							<select name="category" id="category" class="select2" required>
 								<option></option>
 								{% for category in trickCategories %}
 									<option value="{{ category.id }}" {% if trick is defined and category.id == trick.category.id %} selected {% endif %}>{{ category.name }}</option>
@@ -122,15 +125,15 @@
 							</select>
 						</div>
 						{# <div class="col offset-md-1 text-md-start text-center">
-																									<div>
-																										<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
-																											<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1" {% if trick is defined and trick.isDraft %} checked {% endif %}>
-																											<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
-																										</div>
-																									</div>
-																								</div> #}
+								<div>
+									<div class="form-check form-switch d-md-flex align-items-center justify-content-end mt-2">
+										<input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" value="1" {% if trick is defined and trick.isDraft %} checked {% endif %}>
+										<label class="form-check-label label-custom mt-0" for="is_draft">Brouillon</label>
+									</div>
+								</div>
+							</div> #}
 					</div>
-
+					
 					<div class="text-center">
 						<button class="cta mb-0">Valider</button>
 					</div>
