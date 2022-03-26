@@ -32,11 +32,16 @@
 			{% if trick.trickImages|length > 0 or trick.trickVideos|length > 0 %}
 				<div class="section trick__medias pb-0">
 					<div class="container">
-						<div class="row trick__medias-wrapper">
-							{% for image in trick.trickImages %}
+						<div class="row trick__medias-wrapper justify-content-center">
+							{% for key, image in trick.trickImages %}
 								{% if not image.isThumbnail %}
+								{% set imgPath = absolute_url(asset("upload/tricks/#{image.filename}")) %}
 									<div class="col-xl-2 col-lg-4 col-sm-6 text-center mb-4 mb-xl-0 py-3">
-										<img src="{{ absolute_url(asset("upload/tricks/#{image.filename}")) }}" alt="{{ trick.title }} &mdash; Image n°1" class="img-fluid">
+										<picture class="w-100">
+											<source srcset="{{ imgPath | imagine_filter('trick_thumbnail_webp') }}" type="image/webp">
+											<source srcset="{{ imgPath | imagine_filter('trick_thumbnail_jpeg') }}" type="image/jpeg">
+											<img src="{{ imgPath | imagine_filter('trick_thumbnail_jpeg') }}" alt="{{ trick.title }} &mdash; Image n°{{ key + 1 }}" class="w-100">
+										</picture>
 									</div>
 								{% endif %}
 							{% endfor %}

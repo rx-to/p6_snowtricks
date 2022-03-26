@@ -9,7 +9,12 @@
 
 		<li class="col">
 			<figure class="tricklist__item" data-item-type="figure" data-item-title="{{ trick.title }}" data-item-id="{{ trick.id }}">
-				<img src="{{ thumbnail }}" alt="{{ trick.title }}" class="img-fluid">
+				<picture class="w-100">
+					<source srcset="{{ thumbnail | imagine_filter('trick_thumbnail_webp') }}" type="image/webp">
+					<source srcset="{{ thumbnail | imagine_filter('trick_thumbnail_jpeg') }}" type="image/jpeg">
+					<img src="{{ thumbnail | imagine_filter('trick_thumbnail_jpeg') }}" alt="{{ trick.title }}" class="w-100">
+				</picture>
+
 				<figcaption>
 					<a href="{{ path('app_single_trick', {slug: trick.slug}) }}">{{ trick.title }}</a>
 					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.id == trick.author.id %}

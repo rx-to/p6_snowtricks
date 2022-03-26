@@ -317,8 +317,8 @@ body:not(#accueil) #nav-main {
 }
 
 .label-custom.required::after {
-    content: " *";
-    color: var(--bs-red);
+	content: " *";
+	color: var(--bs-red);
 }
 
 input + label {
@@ -499,11 +499,6 @@ nav .nav__toggler span:nth-child(2) {
 	max-height: 17rem;
 	overflow: hidden;
 	height: 100%;
-}
-
-.tricklist__item img {
-	min-height: 100%;
-	max-width: 100%;
 }
 
 .tricklist__item figcaption {

@@ -1,0 +1,22 @@
+# Documentation on how to configure the bundle can be found at: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+
+    webp:
+        generate: true
+
+    controller:
+        redirect_response_code: 302
+
+    filter_sets:
+
+        trick_thumbnail_webp:
+            format: webp
+            quality: 100
+            filters:
+                thumbnail: { size: [300, 170], mode: outbound }
+                
+        trick_thumbnail_jpeg:
+            format: jpeg
+            quality: 75
+            filters:
+                thumbnail: { size: [300, 170], mode: outbound }
