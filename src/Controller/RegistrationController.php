@@ -103,10 +103,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        if (!$user->isVerified())
-            $this->addFlash('success', 'Votre adresse email a bien été vérifiée.');
-        else
-            $this->addFlash('warning', 'Votre adresse email a déjà été vérifiée.');
+        $this->addFlash('success', 'Votre adresse email a bien été vérifiée.');
 
         return $this->redirectToRoute('app_login');
     }
